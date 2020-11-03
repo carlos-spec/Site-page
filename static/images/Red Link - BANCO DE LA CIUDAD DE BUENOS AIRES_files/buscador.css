@@ -1,0 +1,39 @@
+/**
+ * Estilos para el componente Buscador
+ */
+
+div#derecho div.buscador {
+	margin:0;
+	width:200px;
+	height:30px;	
+}
+
+div#derecho div.buscador div{
+	float:left;
+	display:inline;
+}
+
+div#derecho div.buscador input{
+	height:18px;
+	margin: 0 0 0 5px;
+	font-size: 0.8em;
+	padding:2px 5px 0 0;
+	width:130px;
+}
+
+div#derecho div.buscador a{
+	float: left;
+	display:inline;
+}
+
+div.contBuscador span{display:none;}
+
+/*Estilo para la coincidencia del buscador con las opciones*/
+.ac_results span.highlight{
+    font-weight: bold;
+    font-family: inherit;
+    font-size: inherit;
+}
+/*Estilo para el over de las opciones del buscador*/
+.ac_results ul li.ac_over{
+}

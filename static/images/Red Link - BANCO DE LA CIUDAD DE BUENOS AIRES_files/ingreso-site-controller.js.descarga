@@ -1,0 +1,624 @@
+var logoutController = {
+	doLogout: function() {
+	    transactionController.changeCurrentTransaction();
+		$('#saludo').appendTo('body');
+		modalController.showModal('#saludo');
+		$('.jqmOverlay').unbind('click');
+		$('.linkModal div.middle p').html(mensajeSalida);
+		// Se muestra el mensaje 3 segundos y luego redirige a la URL configurada
+		setTimeout(function () { 
+			ejecutarLogout = false;
+			linkController.postJSON(urlLogout, null, logoutController.result);
+		}, 3000);			
+	},
+	result: function(json) {
+		window.location = urlSalida;
+	}
+}
+	
+var cambioClaveController = {
+		
+	mostrarForm: function()  {
+		// Agrego tecladez virtual para los campos
+	if ( ingresoConTecladoVirtual ){
+		$("#cambioClaveDatos input").unbind("focus").bind("focus",function(){
+			tecladoVirtualController.crearTecladoVirtual($(this),'#contenedorPpal',null,true,true);
+			$('#cambioClaveDatos input').css('border','');
+			$(this).css('border','2px solid lightsalmon');
+			tecladoVirtualController.showTecladoVirtual();
+		});
+	}
+	
+	modalController.showModal("#cambioClaveModal");
+		$('.jqmOverlay').unbind('click');
+	},
+	mostrarDatos: function() {
+
+		$('#aceptarMsgCambioClave').hide();
+		$('#cambioClaveMsg').hide();
+		$('#aceptarCambioClave').show();
+		$('#cambioClaveDatos').show();
+		$("#cambioClaveDatos input#claveAnterior").focus();
+	},
+	cerrarForm: function() {
+		modalController.hideModal("#cambioClaveModal");
+		if (mostrarActualizacionDP) {
+			actualizarDPController.init();
+	    	actualizarDPController.mostrarModal();
+		} else if(mostrarActivacionOTP){
+			activarOTPController.mostrarModal();
+	    } else if (mostrarAviso) {
+        	avisosController.mostrarAviso();
+	    } else if (portalNovedadesHomeController.tieneQueMostrarNovedad()){
+		    portalNovedadesHomeController.mostrarNovedad();
+	    }
+	},
+	submit: function() {
+		$('#CambioClaveForm').submit();
+	}	
+}
+
+var portalNovedadesHomeController = {
+		init: function() {
+		},
+		
+		mostrarNovedad: function() {
+		 	modalController.showModal("#portalNovedadesModal");
+		 	$('.jqmOverlay').unbind('click');
+	    },
+	    
+	    irANovedades: function() {
+	    	//portalNovedadesHomeController.ocultarNovedad();
+	    	transactionController.cargarTransaccion(urlPortalNovedades);
+	    },
+	    ocultarNovedad: function() {
+	    	modalController.hideModal("#portalNovedadesModal");
+	    },
+	    tieneQueMostrarNovedad: function(){
+	    	return hayNovedadesAMostrar == true;
+	    	
+	    }
+	}
+
+var avisosController = {
+    
+	init: function() {
+	},
+	
+	mostrarAviso: function() {
+	 	modalController.showModal("#avisoModal");
+	 	$('.jqmOverlay').unbind('click');
+	 	for(var j=1; j <= cantidadCampos ; j++) {
+	 		$("#contCampo" + j).show();
+	 	}
+    },
+    ocultarAviso: function() {
+    	modalController.hideModal("#avisoModal");
+    	if (portalNovedadesHomeController.tieneQueMostrarNovedad()){
+		    portalNovedadesHomeController.mostrarNovedad()
+	    }
+    },
+    validarRespuestaAviso: function() {
+    	var campo1 = $("#campo1").val();
+    	var campo2 = $("#campo2").val();
+    	if(cantidadCampos == 1) {
+    		return avisosController.validarCampo1(campo1);
+    	} else {
+    		if (cantidadCampos == 2) {
+    			return avisosController.validarCampo1(campo1) && avisosController.validarCampo2(campo2);
+    		}
+    	}
+    },
+    validarCampo1: function(dato){
+	   if( dato.length < longMinCampo1) {	        
+			estado.show("La longitud minima para el primer campo es " + longMinCampo1 , estado.tipo.ERROR);
+			return false;
+	   }
+	   if( dato.length > longMaxCampo1) {
+			estado.show("La longitud maxima para el primer campo es " + longMaxCampo1 , estado.tipo.ERROR);
+			return false;
+	   }	   
+	   // TODO: Validar el tipo del campo1 (tipoCampo1)
+	   return true;
+	   
+    },
+    validarCampo2: function(dato){
+ 	   if( dato.length < longMinCampo2) {
+			estado.show("La longitud minima para el segundo campo es " + longMinCampo2 , estado.tipo.ERROR);
+			return false;
+	   }
+	   if( dato.length > longMaxCampo2) {
+			estado.show("La longitud maxima para el segundo campo es " + longMaxCampo2 , estado.tipo.ERROR);
+			return false;
+	   }
+	   // TODO: Validar el tipo del campo2 (tipoCampo2)
+	   return true;
+    },
+    
+    apreteBoton: function(boton){
+        if(boton=='Aceptar'){
+            if(!avisosController.validarRespuestaAviso())
+                return;
+        }
+        if(boton=='SI'){
+            $("#campo1").val('SI');
+            $("#campo2").val(' ');
+        }
+        if(boton=='NO'){
+            $("#campo1").val('NO');
+            $("#campo2").val(' ');
+        }
+        $("#AvisoForm").submit();
+    }
+}
+
+var actualizarDPController = {
+		init: function() {
+			$('#actualizacionDPModal #detalleMsj #email #inputEmail').attr("disabled", true);
+	    	$('#actualizacionDPModal #detalleMsj #telcel #inputCodArea').attr("disabled", true);
+	    	$('#actualizacionDPModal #detalleMsj #telcel #inputTelCel').attr("disabled", true);
+
+	    	$('#actualizacionDPModal #divLeyendaPie #labelNotificacion').hide();
+	    	$('#actualizacionDPModal #detalleMsj #reingreseEmail').hide();
+	    	
+			$('#actualizacionDPModal .clave #botonActualizar').show();
+	    	$('#actualizacionDPModal .clave #botonGuardar').hide();
+	    	
+	    	$('#actualizacionDPModal .clave #botonCancelar').unbind("click").click(function(){
+	    		actualizarDPController.ocultarModal();
+			});
+		},
+		mostrarModal: function() {
+		 	modalController.showModal("#actualizacionDPModal");
+		 	
+		 	if(actualizarDPController.validarCampos(inputEmail, inputCodArea, inputTelCel))
+	    		$('#actualizacionDPModal .clave #botonValidar').show();
+	    	else
+	    		$('#actualizacionDPModal .clave #botonValidar').hide();
+		 	
+		 	$('#inputEmail').val(inputEmail);
+		 	$('#inputReingreseEmail').val('');
+		 	$('#inputTelCel').val(inputTelCel);
+		 	$('#inputCodArea').val(inputCodArea);
+		 	
+		 	$('#labelValidacion').show();
+		 	$('#labelActualizacion').hide();
+		 	
+	    	$('#actualizacionDPModal #divLeyendaPie #labelNotificacion').hide();
+		 	
+		 	$('.jqmOverlay').unbind('click');
+	    },
+	    actualizarDatos: function() {
+	    	$('#actualizacionDPModal #detalleMsj #email #inputEmail').attr("disabled", false);
+	    	$('#actualizacionDPModal #detalleMsj #telcel #inputCodArea').attr("disabled", false);
+	    	$('#actualizacionDPModal #detalleMsj #telcel #inputTelCel').attr("disabled", false);
+	    	
+	    	$('#labelValidacion').hide();
+		 	$('#labelActualizacion').show();
+		 	
+		 	$('#actualizacionDPModal #detalleMsj #reingreseEmail').show();
+	    	$('#actualizacionDPModal #divLeyendaPie #labelNotificacion').show();
+	    	
+	    	$('#actualizacionDPModal .clave #botonActualizar').hide();
+	    	$('#actualizacionDPModal .clave #botonValidar').hide();
+	    	$('#actualizacionDPModal .clave #botonGuardar').show();
+	    	
+	    	$('#actualizacionDPModal .clave #botonCancelar').unbind("click").click(function(){
+	    		actualizarDPController.init();
+	    		actualizarDPController.mostrarModal();
+        	});
+	    	
+	    	$('#hiddenIsActualizar').val('true');
+	    },
+	    guardarDatos: function() {
+			var inputEmail = $("#inputEmail").val();
+			var inputCodArea = $("#inputCodArea").val();
+			var inputTelCel = $("#inputTelCel").val();
+			
+			if(actualizarDPController.validarCampos(inputEmail, inputCodArea, inputTelCel)){
+		    	confirmarCvv2Controller.init();
+			}
+	    },
+	    validarCampos: function(inputEmail, inputCodArea, inputTelCel){
+	    	errorEmail = '';
+	    	errorCodArea = '';
+	    	errorTelCelular = '';
+	    	
+	    	var validaEmail = actualizarDPController.validarEmail(inputEmail);
+	    	var validaCodigoArea = actualizarDPController.validarCodigoArea(inputCodArea);
+	    	var validaTelefonoCelular = actualizarDPController.validarTelefonoCelular(inputTelCel);
+	    	
+	    	if(validaEmail && validaCodigoArea && validaTelefonoCelular)
+	    		return true;
+	    	else {
+	    		estado.show('Debe corregir los siguientes errores para poder continuar:<br>' +
+	    				errorEmail + errorCodArea + errorTelCelular, estado.tipo.ERROR);
+	    		return false;
+	    	}
+	    },
+	    validarEmail: function(inputEmail){
+	    	var inputReingreseEmail = $("#inputReingreseEmail").val();
+	    	var patternEmail = /^(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-zA-Z0-9-]*[a-zA-Z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+    		if(typeof(inputEmail) != "undefined") {
+    			if(inputEmail == ''){
+		    		$('#inputEmail').addClass('error');
+		    		errorEmail = '&emsp;- El campo E-mail es obligatorio.<br>';
+		    		return false;
+	    		} else if(inputEmail.length > 50){
+	    			$('#inputEmail').addClass('error');
+	    			errorEmail = '&emsp;- La longitud del E-mail es inv&aacute;lida.<br>';
+	    			return false;
+	    		} else if(!patternEmail.test(inputEmail)){
+	    			$('#inputEmail').addClass('error');
+	    			errorEmail = '&emsp;- Debe ingresar una casilla de E-mail v&aacute;lida.<br>';
+	    			return false;
+	    		} else if($('#reingreseEmail').css('display') === 'block') {
+	    			if(!inputReingreseEmail){
+	    				$('#inputReingreseEmail').addClass('error');
+	    				errorEmail = '&emsp;- Por favor reingrese su E-mail.<br>';
+	    				return false;
+	    			} else if(inputEmail != inputReingreseEmail){
+	    				$('#inputEmail').addClass('error');
+	    				$('#inputReingreseEmail').addClass('error');
+	    				errorEmail = '&emsp;- Los emails ingresados deben coincidir.<br>';
+	    				return false;
+	    			} else {
+	    				$('#inputReingreseEmail').removeClass('error');
+	    				$('#inputEmail').removeClass('error');
+	    				return true;
+	    			}
+	    		} else {
+	    			$('#inputEmail').removeClass('error');
+	    			return true;
+	    		}
+	    	}
+	    	return true;
+	    },
+	    validarCodigoArea: function(inputCodArea){
+	    	
+	    	var patternCodArea = /^[0-9]+$/;
+    		if(typeof(inputCodArea) != "undefined") {
+	    		if (inputCodArea == ''){
+	    			$('#inputCodArea').addClass('error');
+	    			errorCodArea = '&emsp;- El campo c&oacute;digo de &aacute;rea es obligatorio.<br>';
+	    			return false;
+	    		} else if (inputCodArea.length < 2 || inputCodArea.length > 4){
+	    			$('#inputCodArea').addClass('error');
+	    			errorCodArea = '&emsp;- La longitud del c&oacute;digo de &aacute;rea del tel&eacute;fono celular es inv&aacute;lida.<br>';
+	    			return false;
+	    		} else if (inputCodArea.charAt(0) == 0){
+	    			$('#inputCodArea').addClass('error');
+	    			errorCodArea = '&emsp;- El c&oacute;digo de &aacute;rea del tel&eacute;fono celular no puede comenzar con cero.<br>';
+	    			return false;
+	    		} else if(!patternCodArea.test(inputCodArea)){
+	    			$('#inputCodArea').addClass('error');
+	    			errorCodArea = '&emsp;- El c&oacute;digo de &aacute;rea del tel&eacute;fono celular es inv&aacute;lido.<br>';
+	    			return false;
+	    		} else {
+	    			$('#inputCodArea').removeClass('error');
+	    			return true;
+	    		}
+	    	}
+	    	return true;
+	    },
+	    validarTelefonoCelular: function(inputTelCel){
+			var patternTelCel = /^[0-9]+$/;  
+			if(typeof(inputTelCel) != "undefined") {
+				if (inputTelCel == ''){
+					$('#inputTelCel').addClass('error');
+					errorTelCelular = '&emsp;- El campo tel&eacute;fono celular es obligatorio.<br>';
+					return false;
+				} else if (inputTelCel.length < 5 || inputTelCel.length > 8){
+					$('#inputTelCel').addClass('error');
+					errorTelCelular = '&emsp;- La longitud del tel&eacute;fono celular es inv&aacute;lida.<br>';
+					return false;
+				} else if(!patternTelCel.test(inputTelCel)){
+					$('#inputTelCel').addClass('error');
+					errorTelCelular = '&emsp;- El n&uacute;mero del tel&eacute;fono celular es inv&aacute;lido.<br>';
+					return false;
+				} else {
+					$('#inputTelCel').removeClass('error');
+					return true;
+				}
+			}
+			return true;
+	    },
+	    validarDatos: function() {
+	    	var datos = new Object();
+			datos.cvv2 = '';
+			datos.fechaVencimiento = '';
+			datos.email = inputEmail;
+			datos.codArea =  inputCodArea;
+			datos.telCel = inputTelCel;
+			datos.isActualizar = 'false';
+			
+			linkController.postJSON(urlValidarActualizacionesPersonales, datos,
+				function(json) {
+					if (json.response.data.length > 0) {
+						modalController.hideModal("#actualizacionDPModal");
+						$('#leyendaExito').html(json.response.data[0]);
+						if(json.response.data.length > 1)
+							$('#leyendaDesactivadoDeOTP').html(json.response.data[1]);
+						exitoActualizacionDPController.mostrarModal();
+					}
+				}
+			);
+	    },
+	    ocultarModal: function() {
+	    	modalController.hideModal("#actualizacionDPModal");
+	    	if(mostrarActivacionOTP){
+				activarOTPController.mostrarModal();
+	    	} else if (mostrarAviso) {
+	        	avisosController.mostrarAviso();
+		    } else if (portalNovedadesHomeController.tieneQueMostrarNovedad()){
+			    portalNovedadesHomeController.mostrarNovedad();
+		    }
+	    }
+}
+
+var confirmarCvv2Controller = {
+		init: function(){
+			modalController.hideModal("#actualizacionDPModal");
+	    	modalController.showModal("#confirmarCvv2Modal");
+		 	$('.jqmOverlay').unbind('click');
+		},
+		confirmar: function(){
+			var inputEmail = $("#inputEmail").val();
+			var inputCodArea = $("#inputCodArea").val();
+			var inputTelCel = $("#inputTelCel").val();
+			var isActualizar = $("#hiddenIsActualizar").val();
+			
+			var cvv2 = $('#confirmarCvv2Modal #detalleMsj #divCvv2 #inputCvv2').val();
+			var fechaVencimiento = $('#confirmarCvv2Modal #detalleMsj #divFechaVencimiento #inputFechaVencimiento').val()
+			
+			if(confirmarCvv2Controller.validarCampos(cvv2, fechaVencimiento)) {
+				var datos = new Object();
+				datos.cvv2 = cvv2;
+				datos.fechaVencimiento = fechaVencimiento;
+				datos.email = inputEmail;
+				datos.codArea =  inputCodArea;
+				datos.telCel = inputTelCel;
+				datos.isActualizar = isActualizar;
+				
+				linkController.postJSON(urlValidarActualizacionesPersonales, datos,
+					function(json) {
+						if (json.response.data.length > 0) {
+							modalController.hideModal("#confirmarCvv2Modal");
+							$('#leyendaExito').html(json.response.data[0]);
+							if(json.response.data.length > 1)
+								$('#leyendaDesactivadoDeOTP').html(json.response.data[1]);
+							exitoActualizacionDPController.mostrarModal();
+						}
+					}
+				);
+			}
+		},
+		
+		validarCampos: function(cvv2, fechaVencimiento){
+			var leyendaError = errorLeyendaCabecera + ":<br>";
+			var validacionCvv2 = confirmarCvv2Controller.validarCvv2(cvv2);
+			var validacionFechaVencimiento = confirmarCvv2Controller.validarFechaVencimiento(fechaVencimiento);
+
+			if(validacionCvv2 === true && validacionFechaVencimiento === true){
+				return true;
+			} else if(validacionCvv2 === true && validacionFechaVencimiento !== true){
+				leyendaError = leyendaError + validacionFechaVencimiento;
+				estado.show(leyendaError, estado.tipo.ERROR);
+				return false;
+			} else if(validacionCvv2 !== true && validacionFechaVencimiento === true){
+				leyendaError = leyendaError + validacionCvv2;
+				estado.show(leyendaError, estado.tipo.ERROR);
+				return false;
+			} else if(validacionCvv2 == validacionFechaVencimiento){
+				leyendaError = leyendaError + validacionCvv2;
+				estado.show(leyendaError, estado.tipo.ERROR);
+				return false;
+			} else {
+				leyendaError = leyendaError + validacionCvv2;
+				leyendaError = leyendaError + validacionFechaVencimiento;
+				estado.show(leyendaError, estado.tipo.ERROR);
+				return false;
+			}
+		},
+		
+		validarCvv2: function(cvv2){
+			var numericPattern = /^[0-9]*$/;
+			var leyendaError = "";
+			
+			if(cvv2 == '') {
+				$('#confirmarCvv2Modal #detalleMsj #divCvv2 #inputCvv2').addClass('errorInput');
+				leyendaError = leyendaError + "&emsp;- " + errorCamposVacios + "<br>";
+			} else if(!numericPattern.test(cvv2)){
+				$('#confirmarCvv2Modal #detalleMsj #divCvv2 #inputCvv2').addClass('errorInput');
+				leyendaError = leyendaError + "&emsp;- " + errorCvv2NoNumerico + "<br>";
+			} else if(cvv2.length < 3){
+				$('#confirmarCvv2Modal #detalleMsj #divCvv2 #inputCvv2').addClass('errorInput');
+				leyendaError = leyendaError + "&emsp;- " + errorCvv2Longitud + "<br>";
+			} else {
+				$('#confirmarCvv2Modal #detalleMsj #divCvv2 #inputCvv2').removeClass('errorInput');
+				return true;
+			}
+			return leyendaError;
+		},
+		
+		validarFechaVencimiento: function(fechaVencimiento){
+			var datePattern = /(0[1-9]|1[012])[\/]\d\d/;
+			var leyendaError = "";
+			
+			if(fechaVencimiento == '') {
+				$('#confirmarCvv2Modal #detalleMsj #divFechaVencimiento #inputFechaVencimiento').addClass('errorInput');
+				leyendaError = leyendaError + "&emsp;- " + errorCamposVacios + "<br>";
+			} else if(!datePattern.test(fechaVencimiento)){
+				$('#confirmarCvv2Modal #detalleMsj #divFechaVencimiento #inputFechaVencimiento').addClass('errorInput');
+				leyendaError = leyendaError + "&emsp;- " + errorFechaVencimientoInvalida + "<br>";
+			} else if(fechaVencimiento.length < 4){
+				$('#confirmarCvv2Modal #detalleMsj #divFechaVencimiento #inputFechaVencimiento').addClass('errorInput');
+				leyendaError = leyendaError + "&emsp;- " + errorFechaVencimientoLongitud + "<br>";
+			} else {
+				$('#confirmarCvv2Modal #detalleMsj #divFechaVencimiento #inputFechaVencimiento').removeClass('errorInput');
+				return true;
+			}
+			return leyendaError;
+		},
+		
+		cancelar: function(){
+	    	$('#inputEmail').val(inputEmail);
+		 	$('#inputReingreseEmail').val('');
+		 	$('#inputTelCel').val(inputTelCel);
+		 	$('#inputCodArea').val(inputCodArea);
+			modalController.hideModal("#confirmarCvv2Modal");
+			if(mostrarActivacionOTP){
+				activarOTPController.mostrarModal();
+			} else if (mostrarAviso) {
+	        	avisosController.mostrarAviso();
+		    } else if (portalNovedadesHomeController.tieneQueMostrarNovedad()){
+			    portalNovedadesHomeController.mostrarNovedad();
+		    }
+		}
+}
+
+var exitoActualizacionDPController = {
+		mostrarModal: function() {
+			modalController.hideModal("#confirmarCvv2Modal");
+		 	modalController.showModal("#exitoActualizacionDPModal");
+		 	$('.jqmOverlay').unbind('click');
+	    },
+	    aceptar: function(){
+	    	modalController.hideModal("#confirmarCvv2Modal");
+	    	modalController.hideModal("#exitoActualizacionDPModal");
+	    	if(mostrarActivacionOTP){
+				activarOTPController.mostrarModal();
+	    	} else if (mostrarAviso) {
+	        	avisosController.mostrarAviso();
+		    } else if (portalNovedadesHomeController.tieneQueMostrarNovedad()){
+			    portalNovedadesHomeController.mostrarNovedad();
+		    }
+	    }
+}
+
+var activarOTPController = {
+		mostrarModal: function() {
+		 	modalController.showModal("#activarOTPModal");
+		 	if($('#hiddenIsActualizar').val() != undefined && $('#hiddenIsActualizar').val() == 'true'){
+		 		$('#inputEmailUsuario').val($('#inputEmail').val());
+		 		$('#inputTelCelUsuario').val($('#inputTelCel').val());
+		 		$('#inputCodAreaUsuario').val($("#inputCodArea").val());
+		 	}
+		 	$('.jqmOverlay').unbind('click');
+	    },
+		activar: function(){
+			var inputEmailLogin = $("#inputEmailUsuario").val();
+			var inputCodAreaLogin = $("#inputCodAreaUsuario").val();
+			var inputTelCelLogin = $("#inputTelCelUsuario").val();
+			
+			var medioSeleccionado;
+			var validacionCorrectaLogin = false;
+			
+			if($('#radioEmail').is(':checked')) {
+				validacionCorrectaLogin = activarOTPController.validarEmailLogin(inputEmailLogin);
+				medioSeleccionado = $('#radioEmail').val();
+			} else if($('#radioTelCel').is(':checked')) {
+				validacionCorrectaLogin = activarOTPController.validarTelefonoCompletoLogin(inputCodAreaLogin, inputTelCelLogin);
+				medioSeleccionado = $('#radioTelCel').val();
+			} else
+				estado.show("Favor de seleccionar una de las opciones.", estado.tipo.ERROR);
+			
+			if(medioSeleccionado && validacionCorrectaLogin) {
+				linkController.postJSON(urlActivarOTP, {medioSeleccionado: medioSeleccionado},
+						function(json) {
+							if (json.response.data.length > 0) {
+								modalController.hideModal("#activarOTPModal");
+								$('#leyendaModalValidarOTP').html(json.response.data[0]);
+								validarOTPController.mostrarModal();
+							}
+						});
+			}
+		},
+		validarEmailLogin: function(inputEmail){
+	    	var patternEmail = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+    		if(typeof(inputEmail) != "undefined") {
+    			if(inputEmail == '' || inputEmail.length > 50 || !patternEmail.test(inputEmail)){
+		    		estado.show("Su E-mail informado no cumple con el formato correcto. Pod&eacute;s ingresar a Datos Personales para editar tu informaci&oacute;n.", estado.tipo.ERROR);
+		    		return false;
+	    		} else
+	    			return true;
+	    	}
+	    	return true;
+	    },
+	    validarTelefonoCompletoLogin: function(inputCodArea, inputTelCel){
+	    	var pattern = /^[0-9]+$/;
+    		if(typeof(inputCodArea) != "undefined" && typeof(inputTelCel) != "undefined") {
+	    		if (inputCodArea == '' || (inputCodArea.length < 2 || inputCodArea.length > 4) || inputCodArea.charAt(0) == 0 || !pattern.test(inputCodArea) 
+	    				|| inputTelCel == '' || (inputTelCel.length < 5 || inputTelCel.length > 8) || !pattern.test(inputTelCel)){
+	    			estado.show("Recuerde que su c&oacute;digo de &aacute;rea no debe comenzar con 0 y su tel&eacute;fono celular sin el 15 delante. Pod&eacute;s ingresar a Datos Personales para editar tu informaci&oacute;n.",
+	    					estado.tipo.ERROR);
+	    			return false;
+	    		} else
+	    			return true;
+	    	}
+	    	return true;
+	    },
+		cancelar: function(){
+			modalController.hideModal("#activarOTPModal");
+			if (mostrarAviso) {
+	        	avisosController.mostrarAviso();
+		    } else if (portalNovedadesHomeController.tieneQueMostrarNovedad()){
+			    portalNovedadesHomeController.mostrarNovedad();
+		    }
+		}
+}
+
+var validarOTPController = {
+		mostrarModal: function() {
+		 	modalController.showModal("#validarOTPModal");
+		 	$('.jqmOverlay').unbind('click');
+		 	$("#inputCodigo").val("");
+	    },
+		aceptar: function(){
+			var tokenOTP = $("#inputCodigo").val();
+			if(tokenOTP != ""){
+				linkController.postJSON(urlValidarOTP, {tokenOTP: tokenOTP},
+					function(json) {
+						if (json.response.data.length > 0) {
+							modalController.hideModal("#validarOTPModal");
+							$('#leyendaModalExitoOTP').html(json.response.data[0]);
+							exitoOTPController.mostrarModal();
+						}
+				});
+			} else {
+				estado.show("Debe ingresar la clave que se le envi&oacute; a su medio seleccionado.", estado.tipo.ERROR);
+			}
+		},
+		reenviarCodigo: function(){
+			$("#inputCodigo").val("");
+			linkController.postJSON(urlReenviarCodigorOTP, "",
+				function(json) {
+					if (json.response.data.length > 0) {
+						$('#leyendaModalValidarOTP').html(json.response.data[0]);
+					}
+				});
+		},
+		cancelar: function(){
+			modalController.hideModal("#validarOTPModal");
+			if (mostrarAviso) {
+	        	avisosController.mostrarAviso();
+		    } else if (portalNovedadesHomeController.tieneQueMostrarNovedad()){
+			    portalNovedadesHomeController.mostrarNovedad();
+		    }
+		}
+}
+
+var exitoOTPController = {
+		mostrarModal: function() {
+		 	modalController.showModal("#exitoOTPModal");
+		 	$('.jqmOverlay').unbind('click');
+	    },
+	    aceptar: function(){
+	    	modalController.hideModal("#exitoOTPModal");
+	    	if (mostrarAviso) {
+	        	avisosController.mostrarAviso();
+		    } else if (portalNovedadesHomeController.tieneQueMostrarNovedad()){
+			    portalNovedadesHomeController.mostrarNovedad();
+		    }
+	    }
+}

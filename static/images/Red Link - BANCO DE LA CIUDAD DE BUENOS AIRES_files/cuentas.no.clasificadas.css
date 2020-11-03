@@ -1,0 +1,32 @@
+#cuerpo div#transaccion div.detalle{
+	padding:10px;
+}
+
+#cuerpo div#transaccion div.detalle div{
+	padding:5px;
+}
+
+#cuerpo div#transaccion .linkModal div.bottom{
+	padding:10px 5px!important;
+	width:98%;
+}
+
+#cuerpo div#transaccion .linkModal div.bottom a#guardarNoClasificada.boton{
+	padding:5px 10px;
+	float:right;
+}
+
+#resumenOperacionMod img {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	padding: 10px;
+}
+
+#resumenOperacionMod .extracto {
+	position: relative;
+}
+
+.invisible {
+	display: none;
+}

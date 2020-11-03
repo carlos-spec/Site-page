@@ -1,0 +1,111 @@
+/**
+ * Objeto Contenido
+ * Notifica en cada transaccion cuando hay un cambio en el mapa y recarga los contenidos 
+ */
+var Contenido = {
+	// cache de contenidos
+	contents:{},
+	// ultima transaccion para la que se obtuvieron contenidos
+	ultimaTransaccion:null,
+	
+	notifyChange:function(json) {
+		// Almacena el valor localmente en cache
+		Contenido.contents[Contenido.ultimaTransaccion] = json;
+		contenidoController.init(json);
+		contenidoController.writeAllContents();
+	},
+	getContenidosFor : function(url) {
+		var transactionCode = Contenido.getTransactionCode(url);
+
+		if(transactionCode != Contenido.ultimaTransaccion) {
+			Contenido.ultimaTransaccion = transactionCode;
+	
+			// Agregar transacciones que se incorporen en configPersonalController.transacciones
+			if(transactionCode != 'modificarDatosPersonales' && transactionCode != 'servicioMensajesYAlertas'
+				&& transactionCode != 'avisoViajeExterior' && transactionCode != 'aplicativoCelular'
+				&& transactionCode != 'bajaSegundoFactor' && transactionCode != 'cambiarClave' ) {
+				var data = {codigoTransaccion:transactionCode};
+				$.get(urlContenidos, data, Contenido.notifyChange, "json");
+			}
+		}
+	},
+	getTransactionCode : function(url) {
+		var indexInicio = url.lastIndexOf("/");
+		var indexFin = url.lastIndexOf(".htm");
+		var transactionCode = url.slice(indexInicio + 1,indexFin);
+		return transactionCode;
+	}
+};
+
+/**
+ * objeto con vectores para ir guardando los ContenidoPorTrans
+ */
+var contenidoVector = {
+	"izquierdo": [],
+	"derecho": [],
+	"pie": []
+}
+
+/**
+ * Class ContenidoPorTrans 
+ * - clase para instanciar los contenidos individuales
+ * @param area
+ * @param tipo
+ * @param url
+ * @param orden
+ */
+function ContenidoPorTrans(area, tipo, url, orden)
+{
+	this.area = area;
+	this.tipo = tipo;
+	this.url = url;
+	this.orden = orden;
+	this.completo = false;
+	this.respuesta = "";
+	
+	this.load = function(){
+		var html = "";
+		var objeto = this;
+		
+		switch(tipo){
+			case "img":
+				html += '<div class="contenidoDeLaEntidad">';
+				html += '<img src="'+url+'" alt="" />';
+				html += '</div>';
+				objeto.respuesta = html;
+				objeto.completo = true;
+				$('#'+area).append(html);
+				break;
+			case "html":
+				 $.ajax({
+					type: "POST",
+					url: url,
+					success: function(data){
+						html += '<div class="contenidoDeLaEntidad">';
+					 	html += data;
+						html += '</div>';
+						objeto.respuesta = html;
+				 		},
+				 	complete:function(XMLHttpRequest, status){
+				 		$('#'+area).append(objeto.respuesta);
+				 		}
+				 	});
+				 break;
+			default:
+				 $.ajax({
+					type: "POST",
+					url: url,
+					success: function(data){
+						html += '<div class="contenidoDeLaEntidad">';
+					 	html += data;
+						html += '</div>';
+						objeto.respuesta = html;
+				 		},
+				 	complete:function(XMLHttpRequest, status){
+					 	$('#'+area).append(objeto.respuesta);
+				 		}
+				 	});
+				break;
+			}
+	};
+}

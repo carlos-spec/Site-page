@@ -1,0 +1,218 @@
+/**
+ * @author npinto
+ */
+
+var menu = {
+	banco:'',
+	tipo:
+	{
+		TABS: 'tabs',
+		HBLOCK: 'hBlock',
+		VERTICAL: 'vertical',
+		SLIDER: 'slider'
+	},
+	init:function(tipo){
+		menu.banco = imagePath.split('entidades/')[1].split('/vista')[0];
+		$('.menu').addClass(tipo);
+		switch(tipo){
+			case 'tabs':
+				menu.tabConfig();
+				break;
+			case 'hBlock':
+				menu.hBlockConfig();
+				break;
+			case 'vertical':
+				menu.verticalConfig();
+				break;
+			case 'slider':
+				jqueryslidemenu.buildmenu("menu", arrowimages);
+				break;
+		}
+	},
+	isTabsMenu: function() {
+		return ($('.menu').hasClass('tabs'));
+	},
+	verticalConfig:function(){
+		/*$('.menu.vertical > ul.n1 li').hover(function(){
+	 		$(this).find('ul.n2').addClass('activo');
+	 	},function(){
+	 		$(this).find('ul.n2').removeClass('activo');	
+	 	});
+		$('ul.n2:eq(0)').addClass('especial');
+		//se ocultan los select al mostrar el menu por el bug del motor de render de ie6
+	 	if($.browser.msie && $.browser.version=='6.0'){
+	 		$('.menu.vertical').hover(function(){
+	 			$('select.bajoMenuVertical').css('visibility','hidden');
+	 		},function(){
+	 			$('select.bajoMenuVertical').css('visibility','visible');
+	 		});
+	 	}*/
+		var offsetCaja;
+		var caja;
+		var offsetCajaBottom = 0;
+		var offsetCajaRight = 0;
+		var offsetSelect;
+		var offsetSelectRight = 0;
+		$('.menu.vertical > ul.n1 li').hover(function(){
+			$(this).find('ul.n2').addClass('activo');
+			$(this).find('ul.n2').parent('li a').addClass('activoflecha');
+	 		/*if(isIE6){
+				caja = $(this).find('ul.n2');
+		 		offsetCaja = caja.offset();
+		 		if(offsetCaja!=undefined){
+			 		offsetCajaBottom = caja.height() + offsetCaja.top;				 		
+			 		offsetCajaRight = caja.width() + offsetCaja.left;
+			 		//recorre los select
+			 		$('select').each(function(i,e){
+			 			offsetSelect = $(e).offset();
+			 			offsetSelectBottom = $(e).height() + offsetSelect.top;
+			 			offsetSelectRight = $(e).width() + offsetSelect.left;
+			 			//verifica si la posicion del select esta entre arriba y abajo del menu emergente 
+			 			if((offsetSelect.top > offsetCaja.top) && (offsetSelectBottom < offsetCajaBottom)){
+			 				//verifica si la posicion del select esta entre izquiera y derecha del menu emergente
+			 				if((offsetSelect.left > offsetCaja.left) || (offsetSelectRight < offsetCajaRight)){
+			 					$(e).addClass('z-index-fix');
+			 				}
+			 			}
+			 		});
+			 		$('.z-index-fix').css('visibility','hidden');
+		 		}
+	 		}*/
+	 	},function(){
+	 		$(this).find('ul.n2').removeClass('activo');
+	 		$(this).find('ul.n2').parent('li a').removeClass('activoflecha');
+	 	});
+		if(isIE6){
+			$('.menu.vertical ul.n2, .menu.vertical ul.n3').mouseout(function(){
+		 		$('.z-index-fix').css('visibility','visible').removeClass('z-index-fix');
+			});
+		}
+		$('ul.n2:eq(0)').addClass('especial');
+	},
+	hBlockConfig:function(){	
+		//$('.menu.hBlock > ul:first li ul:first').addClass('activo');
+		var offsetCaja;
+		var caja;
+		var offsetCajaBottom = 0;
+		var offsetCajaRight = 0;
+		var offsetSelect;
+		var offsetSelectRight = 0;
+		$('.menu.hBlock > ul:first li.consubnivel').hover(function(){
+			$(this).find('ul:first').addClass('activo');
+			if(isIE6){
+				/* LINKI - 6235/6235 bug en IE6 en el menu*/
+				var nivel2 = $("ul.activo .botonNivel2").size();
+				var consubnivel = $("ul.activo .consubnivel").size();
+				//alert("nivel2 =" + nivel2);
+				//alert("consubnivel =" + consubnivel);
+				var subitems = nivel2 + consubnivel;
+				$('#menu .n1 .consubnivel .n2').css('width',(subitems*120)+'px');
+				$('#menu .n1 .consubnivel .n2').css('position','absolute');
+				/* FIN LINKI - 6235/6235 */
+
+				caja = $(this).find('ul.n2');
+		 		offsetCaja = caja.offset();
+		 		if(offsetCaja!=undefined){
+			 		offsetCajaBottom = caja.height() + offsetCaja.top;				 		
+			 		offsetCajaRight = caja.width() + offsetCaja.left;
+			 		//recorre los select
+			 		$('select').each(function(i,e){
+			 			offsetSelect = $(e).offset();
+			 			offsetSelectBottom = $(e).height() + offsetSelect.top;
+			 			offsetSelectRight = $(e).width() + offsetSelect.left;
+			 			//alert(i + "offsetSelectBottom: " + offsetSelectBottom + "\n" + "offsetSelectRight: " + offsetSelectRight);
+			 			//verifica si la posicion del select esta entre arriba y abajo del menu emergente 
+			 			if((offsetSelect.top > offsetCaja.top) && (offsetSelectBottom < offsetCajaBottom)){
+			 				//verifica si la posicion del select esta entre izquiera y derecha del menu emergente
+			 				if((offsetSelect.left > offsetCaja.left) || (offsetSelectRight < offsetCajaRight)){
+			 					$(e).addClass('z-index-fix');
+			 				}
+			 			}
+			 		});
+			 		$('.z-index-fix').css('visibility','hidden');
+		 		}
+	 		}
+			$(this).find('ul:first').addClass('activo');
+	 	},function(){
+	 		$(this).find('ul:first').removeClass('activo');
+	 		if(isIE6){
+	 			$('.z-index-fix').css('visibility','visible').removeClass('z-index-fix');
+	 		}
+	 	});
+			 	
+	 	//$('.menu.hBlock ul.n2 li a').bind('click',function(){ alert('click loco');$('.menu.hBlock > ul:first li').find('ul:first').removeClass('activo');});
+	},
+	
+	resetTabsMenu: function() {
+		$('.menu.tabs ul.n1>li').removeClass('selecN1');
+		$('.menu.tabs ul.n1>li').removeClass('onHover'); //LINKI-7045
+		$('.menu.tabs ul.n2').removeClass('activo');
+		$('.menu.tabs ul.n2>li').attr('class','');
+		$('.menu.tabs .botonNivel2').parent('li').attr('class','');
+		$('.menu.tabs ul.n3').removeClass('activo');
+		$('.menu.tabs ul.n3 li').attr('class','');
+	},
+	
+	selectTabsMenuPath: function(path) {
+		menu.resetTabsMenu();
+		if ((path != null) && (path.length > 0)) {
+			var nivel1 = null;
+			$('.menu.tabs ul.n1>li').each(function() {
+				if ($.trim($(this).find('a').html()) == path[0]) {
+					nivel1 = $(this); 
+					$(this).addClass('selecN1').find('ul.n2').addClass('activo');
+				}
+			});
+			
+			if (path.length > 1) {
+				var nivel2 = null;
+				nivel1.find('ul.n2>li').each(function() {
+					if ($.trim($(this).find('a').html()) == path[1]) {
+						nivel2 = $(this);
+						$(this).addClass('selecN2').find('ul.n3').addClass('activo');
+					}
+				});
+				
+				if (path.length > 2) {
+					nivel2.find('ul.n3>li').each(function() {
+						if ($.trim($(this).find('a').html()) == path[2]) {
+							$(this).addClass('selecN3');
+						}
+					});
+				}
+			}
+		}
+	},
+	
+	tabConfig:function(){
+				
+		$('.menu.tabs ul.n1>li').bind('click',function(){						
+			$('.menu.tabs ul.n1>li').removeClass('selecN1');
+			$('.menu.tabs ul.n1>li').removeClass('onHover'); //LINKI-7045
+			$('.menu.tabs ul.n2').removeClass('activo');
+			$(this).addClass('selecN1').find('ul.n2').addClass('activo');		
+		});
+		
+		$('.menu.tabs ul.n2>li').click(function(){			
+			//$('.menu.tabs ul.n2>li').removeClass('selecN2');
+			$('.menu.tabs ul.n2>li').attr('class','');
+			$('.menu.tabs .botonNivel2').parent('li').attr('class','');
+			$('.menu.tabs ul.n3').removeClass('activo');
+			$(this).addClass('selecN2').find('ul.n3').addClass('activo');
+		});
+
+		$('.menu.tabs .botonNivel2').focus(function(){
+			$('.menu.tabs ul.n2 li').attr('class','');
+			$('.menu.tabs .botonNivel2').parent('li').attr('class','');
+			$('.menu.tabs ul.n3').removeClass('activo');
+			$(this).parent('li').addClass('selecN2');
+		});
+		
+		$('.menu.tabs ul.n3 .botonNivel3').focus(function(){
+			$('.menu.tabs ul.n3 li').attr('class','');
+			$(this).parent('li').addClass('selecN3');
+		});
+		
+	}
+}
+

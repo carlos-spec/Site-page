@@ -1,0 +1,177 @@
+#datepick-div, .datepick-inline {
+	padding: 0;
+	margin: 0;
+	width: 185px;
+}
+#datepick-div {
+	display: none;
+	z-index: 10000; /*tiene que estar*/
+}
+.datepick-inline {
+	float: left;
+	display: block;
+}
+
+.datepick-rtl {
+	direction: rtl;
+}
+.datepick-dialog {
+	padding: 5px !important;
+}
+.datepick-disabled {
+	position: absolute;
+	z-index: 100;
+}
+
+button.datepick-trigger {
+	width: 25px;
+}
+img.datepick-trigger {
+	margin: 2px;
+	vertical-align: middle;
+}
+.datepick-prompt {
+	float: left;
+	padding: 2px;
+}
+* html .datepick-prompt {
+	width: 185px;
+}
+.datepick-control, .datepick-links, .datepick-header, .datepick {
+	clear: both;
+	float: left;
+	width: 100%;
+}
+.datepick-control {
+	padding: 2px 0px;
+}
+.datepick-links {
+	padding: 2px 0px;
+}
+.datepick-control, .datepick-links {
+	
+}
+.datepick-links label {
+	padding: 2px 5px;
+	
+}
+.datepick-clear, .datepick-prev {
+	float: left;
+	width: 34%;
+}
+.datepick-rtl .datepick-clear, .datepick-rtl .datepick-prev {
+	float: right;
+}
+
+.datepick-current {
+	float: left;
+	width: 30%;
+}
+.datepick-close, .datepick-next {
+	float: right;
+	width: 34%;
+}
+
+.datepick-rtl .datepick-close, .datepick-rtl .datepick-next {
+	float: left;
+}
+
+.datepick-header {
+	height: 1.6em;
+}
+.datepick-header select {
+	
+}
+.datepick-header span {
+	position: relative;
+	top: 3px;
+}
+.datepick {
+	
+}
+.datepick a {
+	display: block;
+	width: 100%;
+}
+.datepick-title-row th {
+	
+}
+.datepick-week-col {
+	
+}
+.datepick-days-cell {
+	
+}
+.datepick-days-cell a {
+	display: block;
+	
+}
+.datepick-other-month a {
+	
+}
+.datepick-unselectable {
+	
+}
+.datepick-week-over a {
+	
+}
+.datepick-today {
+	
+}
+.datepick-today a {
+	
+}
+.datepick-current-day {
+	
+}
+.datepick-current-day a {
+	
+}
+.datepick-days-cell-over {
+	
+}
+.datepick-days-cell-over a {
+	
+}
+.datepick-status {
+	width: 100%;
+	
+}
+#datepick-div a, .datepick-inline a {
+	margin: 0;
+	padding: 0;
+}
+.datepick-inline .datepick-links a {
+	padding: 0 5px !important;
+}
+.datepick-control a, .datepick-links a {
+	padding: 2px 5px !important;
+}
+.datepick-control a:hover {
+	
+}
+.datepick-links a:hover, .datepick-title-row a:hover {
+	
+}
+.datepick-multi .datepick {
+	
+}
+.datepick-one-month {
+	float: left;
+	width: 185px;
+}
+.datepick-new-row {
+	clear: left;
+}
+/* ___________ IE6 IFRAME FIX ________ */
+.datepick-cover {
+    display: none; /*tiene que estar. no borrar*/
+    display/**/: block; /*tiene que estar. no borrar*/
+    position: absolute; /*tiene que estar. no borrar*/
+    z-index: -1; /*tiene que estar. no borrar*/
+    filter: mask(); /*tiene que estar. no borrar*/
+    top: -4px; /*tiene que estar. no borrar*/
+    left: -4px; /*tiene que estar. no borrar*/
+    width: 200px; /*tiene que estar. no borrar*/
+    height: 200px; /*tiene que estar. no borrar*/
+}

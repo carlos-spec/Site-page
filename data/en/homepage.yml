@@ -1,0 +1,258 @@
+baseURL: "{{ $baseURL }}"
+########################## hero area ##########################
+hero:
+  title : "Smok Media"
+
+  # animated text loop
+  occupations:
+    - "Communications and Digital Marketing"
+    - "Content Design"
+    - "Web Development"
+
+  # slider background image loop
+  slider_image:
+    - "images/slider/slider-4.jpg"
+    - "images/slider/slider-5.jpg"
+    - "images/slider/slider-6.jpg"
+    - "images/slider/slider-7.jpg"
+
+  # button
+  button:
+    enable : true
+    label : "Contact Us!"
+    link : "#contact"
+
+
+####################### Full screen navigation #####################
+fullscreen_nav:
+  enable : true
+  bg_image : "images/backgrounds/full-nav-bg.jpg"
+  first_name : "Smok"
+  last_name : "Media"
+  
+
+########################### About ##################################
+about:
+  enable : true
+  image : "images/backgrounds/portrait.jpg"
+  title : "Know more <br> about us"
+  content : "Smok Media is a Digital Marketing, Contenct Design and Public Relations start-up. We're here to boost your digital profile, through a experienced and motivated team."
+  # button
+  button:
+    enable : true
+    label : "Download our prospect"
+    link : "#" # you can put your cv in static folder and give the path here.
+
+###########################3 Experience ##############################
+experience:
+  ### DESHABILITADO hasta que pongamos algunos casos de éxito
+  enable : false
+  title : "EXPERIENCE"
+  experience_list:
+    # experience item loop
+    - name : "Web Developer"
+      company : "Fiverr.com"
+      duration : "2016-2018"
+      content : "I work with HTML, CSS, and Javascript to create websites and web applications like Personal, Business, Blog, E-comerches etc."
+      
+    # experience item loop
+    - name : "Graphic Designer"
+      company : "Fiverr.com"
+      duration : "2015-2018"
+      content : "Graphic design is art with a purpose. I love illustration, so logo desing is my favorite work. But i can do many things with graphics."
+      
+    # experience item loop
+    - name : "Database Manager"
+      company : "Polytechnic"
+      duration : "2014-2018"
+      content : "Database management is among the fundamental processes in the software field of computing. I know MS Access very well."
+
+
+############################### Skill #################################
+skill:
+  enable : false
+  title : "SKILL"
+  skill_list:
+    # skill item loop
+    - name : "Communication and Public Relations"
+      parcentage : "100%"
+      
+    # skill item loop
+    - name : "Content Design"
+      parcentage : "100%"
+
+    # skill item loop
+    - name : "Web Design"
+      parcentage : "100%"
+
+
+################################### Service ##############################3
+service:
+  enable : true
+  title : "SERVICES"
+  service_list:
+    - name: "Comunicaciones y RRPP"
+      image: "images/icons/rrpp.png"
+    # service item loop
+    - name : "Web Development"
+      image : "images/icons/web-development.png"
+      
+    # service item loop
+    - name : "Content Design"
+      image : "images/icons/graphic-design.png"
+
+    # service item loop
+    - name : "Digital Marketing"
+      image : "images/icons/marketing.png"
+
+
+############################## call to action #########################
+call_to_action:
+  enable : true
+  bg_image : "images/backgrounds/need-service.jpg"
+  title : "Do you need assistance?"
+  button:
+    enable : true
+    label : "Contact Us!"
+    link : "#contact"
+
+############################# blog ################################
+blog:
+  enable : true
+  title : "Blog"
+
+############################# Channel ################################
+channel:
+  enable : true
+  title : "Channel"
+
+############################# portfolio ################################
+portfolio:
+  enable : true
+  title : "Portfolio"
+  portfolio_list:
+    # portfolio item loop
+    - name : "Rafael De Francesco"
+      image : "images/portfolio/rafa.jpg"
+      date : "Feb 2018"
+      category : "Communications"
+      
+    # portfolio item loop
+    - name : "Star Track"
+      image : "images/portfolio/star.jpg"
+      date : "Feb 2018"
+      category : "Content Design"
+      
+    # portfolio item loop
+    - name : "Consultor Legal"
+      image : "images/portfolio/consu.jpg"
+      date : "Feb 2018"
+      category : "Web Development"
+
+    # portfolio item loop
+    - name : "Consultor Legal"
+      image : "images/portfolio/consu2.jpg"
+      date : "Feb 2018"
+      category : "Digital Marketing"
+    
+    # portfolio item loop
+    - name : "Sylvie Burstin"
+      image : "images/portfolio/burstin.jpg"
+      date : "Feb 2018"
+      category : "Digital Marketing"
+      
+    # portfolio item loop
+    - name : "Sylvie Burstin"
+      image : "images/portfolio/burstin2.jpg"
+      date : "Feb 2018"
+      category : "Content Design"
+      
+    # portfolio item loop
+    - name : "Sylvie Burstin"
+      image : "images/portfolio/burstin3.jpg"
+      date : "Feb 2018"
+      category : "Content Design"
+  
+    # portfolio item loop
+    - name : "YPF"
+      image : "images/portfolio/ypf1.jpg"
+      date : "Feb 2018"
+      category : "Content Design"
+      
+    # portfolio item loop
+    - name : "YPF"
+      image : "images/portfolio/ypf2.jpg"
+      date : "Feb 2018"
+      category : "Content Design"
+
+    # portfolio item loop
+    - name : "Star Trak"
+      image : "images/portfolio/star1.jpg"
+      date : "Feb 2018"
+      category : "Content Design"
+      
+    # portfolio item loop
+    - name : "Star Trak"
+      image : "images/portfolio/star2.jpg"
+      date : "Feb 2018"
+      category : "Content Design"
+      
+    # portfolio item loop
+    - name : "Star Trak"
+      image : "images/portfolio/star3.jpg"
+      date : "Feb 2018"
+      category : "Content Design"
+      
+    # portfolio item loop
+    - name : "Star Trak"
+      image : "images/portfolio/star4.jpg"
+      date : "Feb 2018"
+      category : "Content Design"
+
+
+################################# Testimonial #########################33
+testimonial:
+  enable : true
+  title : "Testimonials"
+  testimonial_slider:
+    # slider item loop
+    - name : "Hernan Cousté. Writer"
+      image : "images/clients/hernan.jpg"
+      designation : "Indie Writer"
+      content : |
+        I had an excellent proffesional experience with Smok Media's team. I'm an indie scy-fi writer and needed to build an Instagram community for advertising my work. Thanks to their assistance I learn how to maximmize campaigns, incrementing my followers and my online sales. I highly recommend Smok Media services! 
+    - name  : "FDL Clan"
+      image : "images/clients/fdlclan.png"
+      designation : "FDL Clan"
+      content : |
+        We had the assistance and support from Smok.Media in several ocassions for event's broadcasting and productions. Cultura Hip Hop is a sequence of events organized by Furea de Limite Clan, held since 2017 every Saturday at Centro Cultural Recoleta, Sala Villa Villa, Patio el Aljibe and Sala 6. We highlight the proactivity and support done by this people in terms of design, production and content strategy for our Social Network profiles. They are geniuses!
+    - name : "DEVA"
+      image : "images/clients/deva.png"
+      designation : "DEVA"
+      content : |
+        From DEVA, it was a pleasure for assigining our communication strategy to Smoke Media, testifying the effort and proactivity for understand our business and communication channles we didn't explore enough. Thanks Smok! 
+         
+######################### funfacts #############################3
+funfacts:
+  enable : true
+  funfacts_list:
+    # funfacts item loop
+    - name : "Team"
+      image : "images/icons/works.png"
+      count : "8"
+      
+    # funfacts item loop
+    - name : "Happy customers"
+      image : "images/icons/happy.png"
+      count : "10"
+      
+    # funfacts item loop
+    - name : "Finished Projects"
+      image : "images/icons/project.png"
+      count : "10"
+
+
+############################## contact ###########################
+contact:
+  enable : true
+  title : "Say hello!"

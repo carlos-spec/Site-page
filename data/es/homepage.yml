@@ -1,0 +1,263 @@
+baseURL: "{{ $baseURL }}"
+
+########################## hero area ##########################
+hero:
+  title : "Smok Media"
+
+  # animated text loop
+  occupations:
+    - "Comunicación Organizacional"
+    - "Publicidad en Medios Digitales"
+    - "Diseño de Contenido"
+    - "Relaciones Públicas"
+
+  # slider background image loop
+  slider_image:
+    - "images/slider/slider-4.jpg"
+    - "images/slider/slider-5.jpg"
+    - "images/slider/slider-6.jpg"
+    - "images/slider/slider-7.jpg"
+
+  # button
+  button:
+    enable : true
+    label : "¡Contactanos!"
+    link : "#contact"
+
+
+####################### Full screen navigation #####################
+fullscreen_nav:
+  enable : true
+  bg_image : "images/backgrounds/full-nav-bg.jpg"
+  first_name : "Smok"
+  last_name : "Media"
+  
+
+########################### About ##################################
+about:
+  enable : true
+  image : "images/backgrounds/portrait.jpg"
+  title : "Conocenos"
+  content : "Somos una agencia de comunicación digital dedicada a gestionar la identidad de marca de empresas, emprendedores y personas relevantes que buscan mejorar su imagen y llegar a un nuevo púbico para dar a conocer las soluciones que ofrecen. Smok Media está formada por un equipo de trabajo interdisciplinario, por eso contamos con profesionales de diferentes áreas tales como: relaciones públicas, publicidad, diseño gráfico, programación y data base, community manager y producción audiovisual."
+  # button
+  button:
+    enable : true
+    label : "Prospecto"
+    link : "/blog/filosofia/" # Añadir prospecto
+
+###########################3 Experience ##############################
+experience:
+  ### DESHABILITADO hasta que pongamos algunos casos de éxito
+  enable : false
+  title : "EXPERIENCE"
+  experience_list:
+    # experience item loop
+    - name : "Web Developer"
+      company : "Fiverr.com"
+      duration : "2016-2018"
+      content : "I work with HTML, CSS, and Javascript to create websites and web applications like Personal, Business, Blog, E-comerches etc."
+      
+    # experience item loop
+    - name : "Graphic Designer"
+      company : "Fiverr.com"
+      duration : "2015-2018"
+      content : "Graphic design is art with a purpose. I love illustration, so logo desing is my favorite work. But i can do many things with graphics."
+      
+    # experience item loop
+    - name : "Database Manager"
+      company : "Polytechnic"
+      duration : "2014-2018"
+      content : "Database management is among the fundamental processes in the software field of computing. I know MS Access very well."
+
+
+############################### Skill #################################
+skill:
+  enable : false
+  title : "Habilidades"
+  skill_list:
+    # skill item loop
+    - name : "Comunicación y RRPP"
+      parcentage : "100%"
+      
+    # skill item loop
+    - name : "Diseño de Contenidos"
+      parcentage : "100%"
+      
+    # skill item loop
+    - name : "Diseño Web"
+      parcentage : "100%"
+
+
+  
+################################### Service ##############################
+# https://fontawesome.com/
+service:
+  enable : true
+  title : "Servicios"
+  service_list:
+    - name: "Comunicaciones y RRPP"
+      image: "images/icons/rrpp.png"
+    # service item loop
+    - name : "Desarrollo Web"
+      image : "images/icons/web-development.png"
+      
+    # service item loop
+    - name : "Diseño de Contenidos"
+      image : "images/icons/graphic-design.png"
+
+    # service item loop
+    - name : "Marketing Digital"
+      image : "images/icons/marketing.png"
+
+
+############################## call to action #########################
+call_to_action:
+  enable : true
+  bg_image : "images/backgrounds/need-service.jpg"
+  title : "¿Querés conocernos?"
+  button:
+    enable : true
+    label : "¡Contactanos!"
+    link : "#contact"
+
+############################# blog ################################
+blog:
+  enable : true
+  title : "Blog"
+
+############################# Channel ################################
+channel:
+  enable : true
+  title : "Channel"
+
+############################# portfolio ################################
+portfolio:
+  enable : true
+  title : "Portfolio"
+  portfolio_list:
+    # portfolio item loop
+    - name : "Rafael De Francesco"
+      image : "images/portfolio/rafa.jpg"
+      date : "Feb 2018"
+      category : "Diseño de Contenidos"
+      
+    # portfolio item loop
+    - name : "Star Track"
+      image : "images/portfolio/star.jpg"
+      date : "Feb 2018"
+      category : "Diseño de Contenidos"
+      
+    # portfolio item loop
+    - name : "Consultor Legal"
+      image : "images/portfolio/consu.jpg"
+      date : "Feb 2018"
+      category : "Diseño Web"
+
+    # portfolio item loop
+    - name : "Consultor Legal"
+      image : "images/portfolio/consu2.jpg"
+      date : "Feb 2018"
+      category : "Marketing Digital"
+
+    # portfolio item loop
+    - name : "Sylvie Burstin"
+      image : "images/portfolio/burstin.jpg"
+      date : "Feb 2018"
+      category : "Marketing Digital"
+      
+    # portfolio item loop
+    - name : "Sylvie Burstin"
+      image : "images/portfolio/burstin2.jpg"
+      date : "Feb 2018"
+      category : "Diseño de Contenidos"
+      
+    # portfolio item loop
+    - name : "Sylvie Burstin"
+      image : "images/portfolio/burstin3.jpg"
+      date : "Feb 2018"
+      category : "Diseño de Contenidos"
+      
+    # portfolio item loop
+    - name : "YPF"
+      image : "images/portfolio/ypf1.jpg"
+      date : "Feb 2018"
+      category : "Diseño de Contenidos"
+      
+    # portfolio item loop
+    - name : "YPF"
+      image : "images/portfolio/ypf2.jpg"
+      date : "Feb 2018"
+      category : "Diseño de Contenidos"
+      
+    # portfolio item loop
+    - name : "Star Trak"
+      image : "images/portfolio/star1.jpg"
+      date : "Feb 2018"
+      category : "Diseño de Contenidos"
+      
+    # portfolio item loop
+    - name : "Star Trak"
+      image : "images/portfolio/star2.jpg"
+      date : "Feb 2018"
+      category : "Diseño de Contenidos"
+      
+    # portfolio item loop
+    - name : "Star Trak"
+      image : "images/portfolio/star3.jpg"
+      date : "Feb 2018"
+      category : "Diseño de Contenidos"
+      
+    # portfolio item loop
+    - name : "Star Trak"
+      image : "images/portfolio/star4.jpg"
+      date : "Feb 2018"
+      category : "Diseño de Contenidos"
+
+
+################################# Testimonial #########################33
+testimonial:
+  enable : true
+  title : "Testimonios"
+  testimonial_slider:
+    # slider item loop
+    - name : "Hernan Cousté. Escritor"
+      image : "images/clients/hernan.jpg"
+      designation : "Escritor independiente"
+      content : |
+        Tuve una excelente experiencia profesional con el equipo de Smok Media. Soy escritor independiente de novelas de ciencia ficción y en unos inicios necesitaba conformar una comunidad en Instagram para dar a conocer mis libros. Gracias la asesoría de Smok Media aprendí a pautar campañas efectivas, con lo que pude aumentar la cantidad de followers junto con las ventas a través de plataformas on line. Sumamente recomendable el servicio de Smok.
+    - name : "FDL Clan"
+      image : "images/clients/fdlclan.png"
+      designation : "Cultura Hip Hop"
+      content : |
+        Contamos con el apoyo de Smok Media en distintas oportunidades para la cobertura de nuestros eventos. Cultura Hip Hop es un ciclo, organizado por Fuera de Limite Clan, que se realiza desde hace más de 3 años todos los sábados en el Centro Cultural Recoleta (Sala Villa Villa, Patio el Aljibe y Sala 6). Destacamos de Smok Media siempre su buena predisposición para asesorarnos y darnos soporte en cuestiones de diseño gráfico, community manager y estrategia de contenidos para nuestros perfiles de redes sociales. Son unos genios!
+    - name : "DEVA"
+      image : "images/clients/deva.png"
+      designation : "DEVA"
+      content : |
+        Desde DEVA fue un placer poder dejar la comunicación en sus manos, ver el esfuerzo y la predisposición por aprender sobre la industria de los Esports y desarrollar líneas de comunicación que no teníamos en cuenta. Muchas gracias Smok!
+
+######################### funfacts #############################3
+funfacts:
+  enable : true
+  funfacts_list:
+    # funfacts item loop
+    - name : "Equipo"
+      image : "images/icons/works.png"
+      count : "8"
+      
+    # funfacts item loop
+    - name : "Clientes Satisfechos"
+      image : "images/icons/happy.png"
+      count : "10"
+      
+    # funfacts item loop
+    - name : "Proyectos Hechos"
+      image : "images/icons/project.png"
+      count : "10"
+      
+
+
+############################## contact ###########################
+contact:
+  enable : true
+  title : "¡Contactanos!"

@@ -1,0 +1,17 @@
+// nombreCompletoUsuario y fechaUltimoLogin se encuentran en home.jsp
+var infoPersonalController = {
+	init: function() {
+	 	infoPersonalController.actualizarInfoPersonal();
+	},
+	actualizarInfoPersonal: function() {
+		if(nombreCompletoUsuario.length > 0) {
+			$("#nomyapIP").html("<b>" + nombreCompletoUsuario + "</b>");	
+		}		
+		$("#ultimaEntradaIP").html("&Uacute;ltima entrada " + fechaUltimoLogin);
+		$(".foto img").attr("src", avatarPath);
+	}
+}
+
+$(function() {
+	infoPersonalController.init();
+})

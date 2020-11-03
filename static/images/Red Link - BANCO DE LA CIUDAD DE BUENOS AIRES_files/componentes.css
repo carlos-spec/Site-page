@@ -1,0 +1,140 @@
+@import "../../componentes/transacciones/aplicativo.celular/aplicativo.celular.css";
+@import "../../componentes/transacciones/consulta.carga.valor/consulta.carga.valor.css";
+
+/**
+* ESTILOS QUE SE REUTILIZAN EN DISTINTOS COMPONENTES DE LA APLICACION
+*/
+
+p.textoBienvenida {
+	margin: 5px;
+	padding: 5px;
+	background: #DADADA;
+}
+
+#operacionSegura{
+	display:none;
+}
+
+div.titulosGuia{
+	width:100%;
+	float:left;
+	display:inline;
+}
+
+div.titulosGuia ul{
+	width:100%;
+	display:inline;
+}
+
+div.titulosGuia ul li{
+	float:left;
+	display:inline;
+	padding:3px; 
+	width:125px;
+	margin-right:15px;
+}
+
+* html div.titulosGuia ul li{margin-right:7px;}
+
+div.guia{
+	float:left;
+	display:inline;
+}
+
+div.guia ul{
+	width:100%;
+	display:inline;
+}
+
+div.guia ul li{
+	float:left;
+	display:inline;
+	padding:3px;
+	width:125px;
+	margin-right:10px;
+}
+
+div.guia ul li a{
+	padding:10px;
+	margin-top:10px;
+	float:left;
+	display:inline;
+	min-height: 32px;
+	width:113px;
+}
+
+* html div.guia ul li a{padding:12px 5px;}
+
+div.guia ul li.monto span{
+	float:left;
+	margin:25px 0 0 15px;
+	display:none;	
+}
+
+div.guia ul li.monto span input{
+	width:85px;
+}
+
+div.guia ul li p{
+	float:left;
+	display:inline;
+	margin:28px 0 0 15px;
+	padding:0 0 0 20px;
+}
+
+#cuerpo div#transaccion div.controlesGrilla{
+	width:100%;
+	clear:both;
+	float:left;
+	display:inline;
+	margin-top:10px;
+}
+/*Selector para ajustar los botones en Compras -> Compras en comercio ->Consultas*/
+#cuerpo div#transaccion div#cuentasParametros div.controlesGrilla{
+	width:70%!important;
+}
+
+
+body div.controlesGrilla a.print {
+	float: left;}
+
+body div.controlesGrilla a.download {
+	float: right;}
+	
+.confirmarTransaccion{
+	margin-top:5px;
+	padding:7px 0 0 0;
+	width: 347px;
+	height: 32px;
+	float:left;
+	display:inline;
+}
+
+.agregarTransaccion{
+	float:left;
+	display:inline;
+	margin:13px 0 0 75px;
+	padding:0 0 0 16px;
+}
+
+body .linkModal table.ticket *{
+	padding:2px 5px;
+}
+
+/*estilos para el div con el texto cargando...*/
+#divCargandoPeticionTransaccion{
+	display:none;
+	background-color: #B3DB89;
+	border: 2px solid #7BAD73;
+	font-size: 1em;
+	font-weight: normal;
+	color:#000000;
+	padding:5px;
+	text-align: center;
+	position:absolute;
+	width:280px;
+	left:50%;
+	margin-left:-50px;
+	top:200px;
+	z-index:100000!important;
+}

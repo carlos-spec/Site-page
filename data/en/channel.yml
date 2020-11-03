@@ -1,0 +1,33 @@
+conf:
+  channelid: "UCKloKv9S7O6_TvTaMK8vNGg"
+  title: "Canal de contenido de Smok Media"
+  description: |
+    Por el momento nuestro canal está en plena construcción. ¡Mantenete al tanto!
+
+list:
+  - title : "Lanzamientos"
+    type : "lanzamientos"
+      
+  - title : "Recomendados"
+    type : "recommended"
+
+  - title : "Podcast"
+    type : "podcast"
+
+  - title : "Clientes"
+    type : "clientes"
+
+releases:
+  - image : "images/channel/fdl.png"
+    projectURL : "https://www.youtube.com/embed/QM-A2bhpJSw"
+    projectType:
+        - type: "lanzamientos"
+        - type: "recommended"
+
+podcast:
+  enable : false
+  items:
+    - image : "images/blog/rap-sin-limite.png"
+      projectURL : "https://www.youtube.com/embed/QM-A2bhpJSw"
+      projectType:
+          - type: "podcast"

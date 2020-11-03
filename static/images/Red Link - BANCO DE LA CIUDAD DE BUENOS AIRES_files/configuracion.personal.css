@@ -1,0 +1,73 @@
+div#cabeza div.contConfiguracionPersonal{
+	float:right;
+	padding: 5px;
+	clear:both;
+	margin:-35px -20px 0 0px;
+	_margin:0px;
+	width:180px;
+}
+
+/**
+ * Modal
+ */
+
+body #modalConfiguracionPersonal.jqmWindow.linkModal{
+	z-index:5006;
+	margin-left: -460px!important;
+	padding:5px;
+	margin-top:-30px;
+	_margin-top:0px;
+	width:920px;
+}
+
+*:first-child+html body #modalConfiguracionPersonal.jqmWindow.linkModal{margin-left: -460px!important;}
+* html body #modalConfiguracionPersonal.jqmWindow.linkModal{margin-left: -500px;}
+
+
+#modalConfiguracionPersonal div.top a{
+	margin-right:5px;
+}
+
+body #modalConfiguracionPersonal div.middle{
+	max-height:600px!important;
+	min-height: 100px;
+	
+	width:100%!important;
+	margin:0px;
+	padding:0px!important;
+}
+
+* html body .linkModal div.middle { 
+   height: expression( this.scrollHeight > 599 ? "600px" : "auto" ); 
+}
+
+#modalConfiguracionPersonal div.middle .extracto{
+	width:880px;
+	float:left;
+	margin:10px 10px 0px;
+}
+
+#modalConfiguracionPersonal div.middle .extracto h5{
+	margin:5px 0 5px 5px;
+	padding-left:15px;
+	background-repeat:no-repeat;
+	background-position:5px 3px;
+	cursor:pointer;
+	cursor:hand;
+}
+
+#modalConfiguracionPersonal div.middle .extracto .contenido{
+	width:860px;
+	margin:10px 10px 15px;
+	overflow:auto;
+}
+
+#modalConfiguracionPersonal div.middle .extracto.abierto h5{
+	background-position:0px 6px;}
+	
+#modalConfiguracionPersonal div.middle .extracto.abierto #resumenConfiguracionTransacciones .realizada h5{
+	background-image:none;
+	cursor:default;}
+
+#modalConfiguracionPersonal div.middle .extracto .detalle{display:none;}
+#modalConfiguracionPersonal div.middle .extracto.abierto .detalle{display:block;}

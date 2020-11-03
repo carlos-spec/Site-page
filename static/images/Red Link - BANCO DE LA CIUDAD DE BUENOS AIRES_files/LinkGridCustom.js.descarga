@@ -1,0 +1,935 @@
+/**
+* Clase para representar las grillas.
+* LinkGrid actua como wrapper de jqGrid (JQuery Grid Plugin - @link http://www.trirand.com/blog/ )
+* jqGrid es un control javascript que permite representar datos tabulares utilizando Ajax y
+* que puede ser integrado a cualquier tecnologia del lado del servidor.
+* 
+*/
+
+function LinkGrid(config) {
+ 
+    this.ver = 0.1;
+    this.config = config;
+    this.datatype = "local";  
+	this.totalFilas = 0;
+	this.totalCols = 0;
+	this.columns = [];
+	this.colNames = [];
+	this.cellsDataProviders = [];
+	this.totalCellsDataProviders = 0;
+	this.loadCompleteFunction = [];
+	this.totalLoadCompleteFunction = 0;
+	this.completeLoadedRows = 0;
+	this.onSelectRowFunctions = [];
+	this.currentPage = 1;
+	this.totalPages = 1;
+	this.orderingField = null;
+	this.sortOrder = 'desc';
+	this.subLinkGrid = null;
+	this.data = null;
+	this.hrefCell = null; //{campo:"nombreCampo", funcion:"javascript:miFun"};
+	this.onSortColumnFunctions = [];
+	this.transactionId= transactionController.currentTransactionId;
+	this.pageChangeFunction=null;
+	this.gridDataSourceErrorFunction=null;
+		
+	this.init = function() {
+	    this.activar();
+	    this.loadData(this.config.url);
+	};
+	
+	this.initWithoutLoad = function() {
+		this.activar();
+	};
+	
+	this.addColumn= function(column,name) {
+		if (column.sorttype == 'date') {
+			column.date = true;
+			column.datefmt = 'd-m-Y';
+		}
+	    this.columns[this.totalCols] = column;
+	    this.colNames[this.totalCols] = name;
+	    this.totalCols++;
+	};
+	
+	this.addCellsDataProvider = function(cellsDataProvider) {
+	   this.cellsDataProviders[this.totalCellsDataProviders] = cellsDataProvider;
+       this.totalCellsDataProviders++;
+	};
+	
+	this.mostrarContextual = function(rowId,posx,posy) {
+		if(this.config.contextual) {
+			var nuevolayout = 'Banco ' + layout.split('Banco ')[1];
+			var tipo = this.config.contextual.tipo;
+			var tableId = this.config.id;
+			var contextualId = this.config.contextual.id;
+			var positionTop = 0;
+			var plusLeft = 0;
+
+			switch(nuevolayout){
+			
+			
+			case 'Banco Joven':
+				//if($('.contextual').attr('class').split(" ")[1]=="simple"){
+				if($('.contextual').hasClass("simple")){
+					/**
+					 * posicionamiento si el contextual es SIMPLE
+					 * */
+					if(jQuery.browser.msie){
+						if(jQuery.browser.version=="6.0"){
+							positionTop = (posy-5);
+							plusLeft-=50;
+						}else{
+							positionTop = (posy-5);
+							plusLeft-=50;
+						}
+					}else{						
+						positionTop = (posy-7);
+						plusLeft-=75;
+					}
+				}else{
+					/**
+					 * posicionamiento si el contextual es MULTIPLE
+					 * */
+					if(jQuery.browser.msie){
+						if(jQuery.browser.version=="6.0"){
+							positionTop = (posy-150);
+							plusLeft-=75;
+						}else{
+							positionTop = (posy-25);
+							plusLeft-=75;
+						}
+					}else{
+						positionTop = (posy-25);
+						plusLeft-=100;
+					}
+				}				
+				break;
+			case 'Banco Otono':
+			case 'Banco Invierno':
+
+				if(tableId!='grillaPagos'){
+					var index = 1;
+					var fila = $('#'+tableId+' tr.selected');
+					var filaOffset = fila.offset();
+					var filaBottom = filaOffset.top + fila.height();
+					while (index < fila.length){
+						var element = fila[index];
+						if (element != null){
+							var filaOffset2 = $(element).offset();
+							if (filaOffset2.top <= posy && posy <=  filaOffset2.top + $(element).height()){
+								filaOffset = filaOffset2;
+								filaBottom = filaOffset2.top + $(element).height();
+							}
+						}
+						index++;
+					}
+					
+					var alturaContextual = $("#" + contextualId).height();
+					//setea la posicion de arriba del contextual, abajo de la fila
+					positionTop = filaBottom - alturaContextual;
+				}else{
+					var fila = $('#'+tableId+' tr.over');
+					var filaOffset = fila.offset();
+					var filaBottom = filaOffset.top + fila.height();
+					var alturaContextual = $("#" + contextualId).height();
+					//setea la posicion de arriba del contextual, abajo de la fila
+					positionTop = filaBottom - alturaContextual;
+				}
+				if($('.contextual').hasClass("simple")){
+					/**
+					 * posicionamiento si el contextual es SIMPLE
+					 * */					
+					if(jQuery.browser.msie){				
+						if(jQuery.browser.version=="6.0"){	
+							plusLeft-=40;
+						}else{
+							plusLeft+=100;
+						}
+					}else{
+//						if(tableId=='grillaPagos')positionTop = (posy-50);
+						plusLeft+=260;
+					}
+					
+					$(this).css('right',200);
+					
+				}else{
+					/**
+					 * posicionamiento si el contextual es MULTIPLE
+					 * */
+					if(jQuery.browser.msie){
+						plusLeft -= $('.contextual').width();
+					}else{
+						//positionTop = (posy-45);
+						//plusLeft-=180;
+						plusLeft -= $('.contextual').width() + 10;
+					}
+				}
+				break;
+			default:
+				//if($('.contextual').attr('class').split(" ")[1]=="simple"){
+				if($('.contextual').hasClass("simple")){
+					/**
+					 * posicionamiento si el contextual es SIMPLE
+					 * */
+					if(jQuery.browser.msie){
+						if(jQuery.browser.version=="6.0"){				
+							positionTop = (posy-15);
+							plusLeft-=20;
+						}else{
+							positionTop = (posy-12);
+							plusLeft-=40;
+						}
+					}else{
+						positionTop = (posy-10);
+						plusLeft-=40;
+					}
+				}else{
+					/**
+					 * posicionamiento si el contextual es MULTIPLE
+					 * */
+					if(jQuery.browser.msie){
+						plusLeft+=140;
+						if(jQuery.browser.version=="6.0"){
+							positionTop = (posy-8);
+						}else{
+							positionTop = (posy-10);
+						}
+					}else{
+						positionTop = (posy-10);
+						plusLeft+=120;
+					}
+				}		
+				break;
+			}
+			if ((tipo != '') && (tableId != '') && (contextualId != '')) {
+				var anchoTabla = $('#'+tableId).parent('div').width();
+				var tablaOffset = $('#'+tableId).offset();
+				var positionLeft = 0;
+				if(posy==0){
+					positionTop = tablaOffset.top;
+				}else{
+					var nombreBanco = imagePath.split("entidades/")[1].split("/")[0];
+					contextual.add(rowId, tipo, tableId, "#" + contextualId);
+					if($("#" + contextualId).hasClass("detalleVep")){//fix LINKI-4669
+						anchoTabla = $('#'+tableId).parent('div').parent('.resultadoVeps').width();
+						tablaOffset = $('#'+tableId).parent('div').parent('.resultadoVeps').offset();
+					}
+					if($("#" + contextualId).hasClass("consPF")){//fix LINKI-5185 PARA INVERSIONES
+						if(nombreBanco=='banco.ciudad'){
+							anchoTabla = $('#'+tableId).width();
+							tablaOffset = $('#'+tableId).offset();
+							
+							if(jQuery.browser.msie){
+								if(jQuery.browser.version=="6.0"){
+									//positionTop = (posy-45);
+									plusLeft+=10; /*Correccion en el margen de mas para IE-6 2.11.09*/
+								}else{
+									//positionTop = (posy-37);
+									plusLeft+=15;
+								}
+							}else{
+								//positionTop = (posy-45);
+								plusLeft+=5;
+							}
+
+						}else{
+							anchoTabla = $('#'+tableId).parent('div').parent('#contPF').width();
+							tablaOffset = $('#'+tableId).parent('div').parent('#contPF').offset();
+						}
+					}
+					positionLeft = (tablaOffset.left+anchoTabla+plusLeft);
+					$('.contextual').css({'left':positionLeft,'top':positionTop}).attr('rowIdSel',rowId);
+				}
+				
+			}
+		}
+	};
+	
+	this.createPager = function() {
+		var dataSource = new GridDataSource(this);
+		var isIE11 = !!navigator.userAgent.match(/Trident.*rv[ :]*11\./);
+		if (this.tienePagerNormal()) {
+			if($.browser.msie || isIE11){
+				$(this.config.pagerId + " #first").wrap('<a id="firstA"></a>');
+				$(this.config.pagerId + " #prev").wrap('<a id="prevA"></a>');
+				$(this.config.pagerId + " #next").wrap('<a id="nextA"></a>');
+				$(this.config.pagerId + " #last").wrap('<a id="lastA"></a>');
+				$(this.config.pagerId + " #firstA").unbind('click').click(dataSource.loadFirstPage);
+				$(this.config.pagerId + " #prevA").unbind('click').click(dataSource.loadPreviousPage);
+				$(this.config.pagerId + " #nextA").unbind('click').click(dataSource.loadNextPage);
+				$(this.config.pagerId + " #lastA").unbind('click').click(dataSource.loadLastPage);
+			}else{
+				$(this.config.pagerId + " #first").unbind('click').click(dataSource.loadFirstPage);
+				$(this.config.pagerId + " #prev").unbind('click').click(dataSource.loadPreviousPage);
+				$(this.config.pagerId + " #next").unbind('click').click(dataSource.loadNextPage);
+				$(this.config.pagerId + " #last").unbind('click').click(dataSource.loadLastPage);
+			}
+			$(this.config.pagerId + " input.selbox").unbind('keypress').keypress(dataSource.loadPage);
+		} else if (this.tienePagerSecuencial()) {
+			$(this.config.pagerId + " > *").hide();
+			$(this.config.pagerId + " #sp_1").show();
+			if($.browser.msie || isIE11){
+				$(this.config.pagerId + " #prev").wrap('<a id="prevA"></a>');
+				$(this.config.pagerId + " #next").wrap('<a id="nextA"></a>');
+				$(this.config.pagerId + " #prevA").show().unbind('click').click(dataSource.loadPreviousPage);
+				$(this.config.pagerId + " #nextA").show().unbind('click').click(dataSource.loadNextPage);
+			} else {
+				$(this.config.pagerId + " #prev").show().unbind('click').click(dataSource.loadPreviousPage);
+				$(this.config.pagerId + " #next").show().unbind('click').click(dataSource.loadNextPage);
+			}
+		} else {
+			$(this.config.pagerId + ' > *').hide();
+		}
+		// Se elimina el select de la cantidad de registros por pagina
+		$(this.config.pagerId + " select.selbox").remove();
+	};
+	
+	this.actualizarPaginado = function(data) {
+	    if (this.tienePagerNormal()) {
+			this.setCurrentPage(data.page);
+	    	var pages = data.total;
+	    	if (pages == 0) {
+	    		pages = 1;
+	    	}
+	    	this.setTotalPages(pages);
+
+	    	// Modificacion de los botones del pager.
+	    	/*
+	    	if(data.page == 1){
+    	        $("#first").hide();
+    	        $("#prev").hide();
+    	        $("#next").show();
+    	        $("#last").show();
+	    	}
+	    	if(data.page == data.total){
+    	        $("#first").show();
+    	        $("#prev").show();
+    	        $("#next").hide();
+    	        $("#last").hide();
+	    	}
+	    	if(data.total == 1){
+	    	    $("#first").hide();
+                $("#prev").hide();
+                $("#next").hide();
+                $("#last").hide();
+	    	}
+	    	*/
+	    	
+		} else if (this.tienePagerSecuencial()) {
+			var numeroPagina = data.paginaActual;
+			if (numeroPagina == null) {
+				numeroPagina = 1;
+			}
+			this.setCurrentPage(numeroPagina);
+			$(this.config.pagerId + " #sp_1").html("P&aacute;gina " + numeroPagina);
+			
+			this.setPaginaAnterior(data.paginaAnterior);
+			this.setPaginaSiguiente(data.paginaSiguiente);
+			
+			// Modificacion de los botones del pager.
+			/*
+			if(numeroPagina == 1){
+			   $("#first").hide();
+	           $("#prev").hide();
+	           $("#next").show();
+	           $("#last").show();
+			}
+			if(numeroPagina == data.total){
+	           $("#first").show();
+	           $("#prev").show();
+	           $("#next").hide();
+	           $("#last").hide();
+	        }
+			if(data.total == 1){
+                $("#first").hide();
+                $("#prev").hide();
+                $("#next").hide();
+                $("#last").hide();
+            }
+            */
+		}
+	};
+	
+	this.activarLoader = function() {
+		//if ( $('#' + this.config.id).getDataIDs().length == 0 )
+			$("#" + this.config.id).parent('div').append('<div style="width:100%;text-align:center;" id="gridLoader_' + this.config.id + '"><img src="' + imagePath + '/compartido/cargando.gif" /></div>');
+		//$("#" + this.config.id + " tr.jqgrow").css('opacity','0.3');
+	};
+	
+	this.desactivarLoader = function() {
+		$("#" + this.config.id).parent('div').find("div#gridLoader_" + this.config.id).remove();
+		//$("#" + this.config.id + " tr.jqgrow").css('opacity','');
+	};
+	
+	this.initOnSortColumn = function() {
+		var contextualId = null;
+		if (this.config.contextual != null) {
+			contextualId = this.config.contextual.id;
+		}
+		return new OnSortColumn(this, contextualId);
+	};
+	
+	this.activar = function () {
+		linkGridController.addLinkGrid(this.config.id, this);
+		var onSortColumn = this.initOnSortColumn();
+        $("#" + this.config.id).jqGrid({
+	      	datatype: this.datatype,	        	
+	       	colNames: this.colNames, 
+	       	colModel: this.getMainGridColumns(),
+	       	rowNum: this.config.rowNum, 
+	       	rowList: [10,20,30],
+	       	height: this.config.height,
+	       	pager: jQuery(this.config.pagerId),
+	       	imgpath: imagePath + "/grilla",
+	       	sortname: this.config.sortname, 
+	       	viewrecords: true, 
+	       	sortorder: "desc",
+	       	loadonce: false,  
+	       	caption:this.config.titulo,
+	       	subGrid: this.config.subGrid,
+	       	subGridRowExpanded: subGridRowExpandedFunction.execute,
+	       	multiselect: this.config.checkbox,
+	       	onSelectRow: onSelectRowFunction.execute,
+	       	onSelectAll: onSelectRowFunction.execute,
+	       	onSortCol: onSortColumn.execute,
+	       	addContextual:(this.config.contextual)?true:false,
+	       	sortFunction: this.getSortFunction(),
+	       	mouseOverEnabled: (this.config.mouseOverEnabled)?false:true
+        });
+        
+//		TODO Ver como se hace para solucionar el bug del contextual en IE y que respete el height del contenedor        
+        //$("#" + this.config.id).css('overflow','visible');
+        	//.parent('div').css('overflow','visible');
+	};
+	this.getColNames = function(){
+		this.colNames[this.colNames.length] = '';
+		return this.colNames;
+	};
+	
+	this.getSortFunction = function() {
+		var sortFunction = null;
+		if (this.config.activarOrdenamientoServer == true) {
+			var dataSource = new GridDataSource(this);
+			sortFunction = dataSource.ordenar;
+		}
+		return sortFunction;
+	};
+	
+	this.addColumnFormatter = function(colName, formatter) {
+		for (var i = 0; i < this.columns.length; i++) {
+			if (this.columns[i].name == colName) {
+				this.columns[i].formatter = formatter;
+			}
+		}
+	};
+	
+	this.getMainGridColumns = function() {
+		var mainColumns = [];
+		for (var i = 0; i < this.columns.length; i++) {
+			mainColumns[i] = this.cloneObject(this.columns[i]);
+			mainColumns[i].resizable = false;
+			mainColumns[i].sortable = false;
+			if (i >= this.config.maxMainColumns) {
+				mainColumns[i]['hidden'] = true;
+			}
+		}
+		return mainColumns;
+	};
+	
+	this.getSubGridColumns = function() {
+		var subGridColumns = [];
+		for (var i = this.config.maxMainColumns; i < this.columns.length; i++) {
+			this.columns[i].sortable = false;
+			this.columns[i].resizable = false;
+			subGridColumns[i - this.config.maxMainColumns] = this.cloneObject(this.columns[i]);
+		}
+		return subGridColumns;
+	};
+	
+	this.getSubGridColumnNames = function() {
+		var subGridColumnNames = [];
+		for (var i = this.config.maxMainColumns; i < (this.colNames.length); i++) {
+			subGridColumnNames[i - this.config.maxMainColumns] = this.cloneObject(this.colNames[i]);
+		}
+		return subGridColumnNames;
+	};
+	
+	this.cloneObject = function(object) {
+		if(typeof(object) != 'object') {
+			return object;
+		}
+		if(object == null) {
+			return object;
+		}
+	    var newObject = new Object();
+	    for(var i in object) {
+	    	newObject[i] = this.cloneObject(object[i]);
+	    }
+	    return newObject;
+	}
+	
+	this.loadFirstPage = function() {
+		if (this.currentPage > 1) {
+			this.currentPage = 1;
+			this.loadData(this.config.url);
+		}
+	};
+	
+	this.loadPreviousPage = function() {
+		// si tiene pager secuencial, el boton solo se muestra si hay una pagina anterior
+		if ((this.currentPage > 1) || (this.tienePagerSecuencial())) {
+			this.currentPage = this.currentPage - 1;
+			this.loadData(this.config.url);
+		}
+	};
+	
+	this.loadPage = function(pageNumber) {
+		if(this.currentPage != pageNumber) {
+			if ((1 <= pageNumber) && (pageNumber <= this.totalPages)) {
+				this.currentPage = pageNumber;
+				this.loadData(this.config.url);
+			} else {
+				this.setCurrentPage(this.currentPage);
+			}
+		}
+	};
+	
+	this.loadNextPage = function() {
+		// si tiene pager secuencial, el boton solo se muestra si hay una pagina siguiente
+		if ((this.currentPage < this.totalPages) || (this.tienePagerSecuencial())) {
+			this.currentPage = this.currentPage + 1;
+			this.loadData(this.config.url);
+		}
+	};
+	
+	this.loadLastPage = function() {
+		if (this.currentPage < this.totalPages) {
+			this.currentPage = this.totalPages;
+			this.loadData(this.config.url);
+		}
+	};
+	
+	this.ordenar = function(orderingField, sortOrder) {
+		if ((orderingField != null) && (orderingField != "")) {
+			this.orderingField = orderingField;
+			this.sortOrder = sortOrder;
+			this.reloadData();
+		}
+	};
+	
+	this.loadData = function(url) {
+		if (this.config.contextual != null) {
+			contextual.remove('#' + this.config.contextual.id);
+		}
+		var gridDataSource = new GridDataSource(this);
+		var gridDataSourceError = new GridDataSourceError(this);
+        if (url != null) {
+    		this.activarLoader();
+        	linkController.asyncCall(url, globalPollUrl, gridDataSource, this.getRequestData(), this.getRequestPollData(), gridDataSourceError, this.transactionId);
+        }
+        else if (this.config.injected_data != null ){
+        	gridDataSource.execute(this.config.injected_data);
+        }
+	};
+	
+	this.tienePagerNormal = function() {
+		return ((this.config.pagerId != null) && (this.config.activarPaginado));
+	};
+	
+	this.tienePagerSecuencial = function() {
+		return ((this.config.pagerId != null) && (this.config.activarPaginadoSecuencial));
+	};
+	
+	this.getRequestPollData = function() {
+		var inputPollDTO = new Object();
+		inputPollDTO.correlationId = "";
+		return inputPollDTO;
+	};
+	
+	this.getRequestData = function() {
+		var requestData;
+		if (this.config.requestDataFunction) {
+			requestData = this.config.requestDataFunction();
+		} else {
+			requestData = new Object();
+		}
+		
+		if (this.tienePagerNormal()) {
+			requestData['linesPerPage'] = $("#" + this.config.id).getGridParam('rowNum');
+			requestData['pageNumber'] = this.currentPage;
+			requestData['orderingField'] = this.getOrderingField();
+			requestData['sortOrder'] = this.sortOrder;
+		} else if (this.tienePagerSecuencial()) {
+			requestData['pagina'] = this.currentPage;
+		}
+		return requestData;
+	};
+	
+	this.getOrderingField = function() {
+		if (this.orderingField == null) {
+			if (this.config.sortname != null) {
+				return this.config.sortname;
+			} else {
+				return this.getMainGridColumns()[0].name;
+			}
+		}
+		return this.orderingField;
+	};
+	
+	this.getSortOrder = function() {
+        return this.sortOrder;
+    };
+	
+	this.reloadData = function(url) {
+		if (url == null) {
+			url = this.config.url;
+		}
+		this.setCurrentPage(1);
+		this.loadData(url);
+	};
+	
+	this.clearGridData = function() {
+		$("#" + this.config.id).clearGridData();
+	};
+	
+	this.completar = function(result) {
+		var grid = $("#" + this.config.id);
+		grid.clearGridData();
+	 	this.totalFilas = result.length;
+	    for(var i=1; i <= this.totalFilas; i++) {
+	    	
+	    	/**
+	    	 * agrega al campo la posibilidad de ser href
+	    	 */
+	    	if(this.hrefCell != null)
+	    	{
+	    		result[i-1][this.hrefCell['campo']]= "<a href='" + this.hrefCell['funcion'] + "(" + i + ")" + "'>" + result[i-1][this.hrefCell['campo']] +"</a>";
+	    	}
+	    	
+           grid.addRowData(i,result[i-1]);
+//           this.actualizarCeldas(i, grid);
+	    }
+	    var grilla = this;
+	    var timer = setTimeout(function() {
+	    	clearTimeout(timer);
+		    for(var i=1; i <= grilla.totalFilas; i++) {
+		    	grilla.actualizarCeldas(i, grid);
+		    }
+		    // si hay cellsDataProviders, hay que esperar que se carguen excepto que no haya ninguna fila
+		    if ((grilla.totalCellsDataProviders == 0) || (grilla.totalFilas == 0)) {
+		    	grilla.invokeLoadCompleteFunctions();
+		    }
+		    // Ejecuta la funcion pageChangeFunction si esta definida
+		    if(grilla.pageChangeFunction != null) {
+		    	grilla.pageChangeFunction();
+		    }
+		    //grilla.createPager();
+		    grilla.desactivarLoader();
+	    }, 300);
+	    this.createPager();
+	};
+	
+	this.actualizarCeldas = function(i, grid) {
+	    for(var j=0;j<=this.totalCellsDataProviders-1;j++) {
+	        var row = grid.getRowData(i);
+	    	this.cellsDataProviders[j].execute(row, i, this, grid);
+	    }
+	};
+	
+	this.removeAllLoadCompleteFunctions = function(f) {
+		this.totalLoadCompleteFunction = 0;
+		this.loadCompleteFunction = [];
+	};
+	
+	this.addLoadCompleteFunction = function(f) {
+	   this.loadCompleteFunction[this.totalLoadCompleteFunction] = f;
+       this.totalLoadCompleteFunction++;
+	};
+	
+	this.addOnSelectRowFunction = function(f) {
+	    this.onSelectRowFunctions[this.onSelectRowFunctions.length] = f;
+	};
+	
+	this.addOnSortColumnFunctions = function(f) {
+		this.onSortColumnFunctions[this.onSelectRowFunctions.length] = f;
+	};
+	
+	this.executeOnSelectRowFunction = function(rowId,posx,posy) {
+		// El select en una fila de subGrid devuelve rowId = ''
+		if(rowId != '') {
+			this.invokeOnSelectRowFunctions();
+	        this.mostrarContextual(rowId,posx,posy);
+		}
+	};
+	
+	this.invokeOnSelectRowFunctions = function() {
+		for(var i = 0; i < this.onSelectRowFunctions.length; i++) {
+            this.onSelectRowFunctions[i].execute();
+        }
+	};
+	
+	this.invokeOnSortColumnFunctions = function() {
+		for(var i = 0; i < this.onSortColumnFunctions.length; i++) {
+			this.onSortColumnFunctions[i].execute();
+		}
+	};
+	
+	this.invokeLoadCompleteFunctions = function() {
+	   for (var i = 0; i <= this.totalLoadCompleteFunction - 1; i++) {
+           this.loadCompleteFunction[i].execute(this.data);
+        }
+	};
+	
+	this.completeLoadedRow = function() {
+	   this.completeLoadedRows++;
+	   if ( this.completeLoadedRows == this.getTotalFilasACompletar() ) {
+	       this.invokeLoadCompleteFunctions();
+	   }
+	};
+	
+	this.getTotalFilasACompletar = function() {
+		if( this.totalCellsDataProviders > 1 ) {
+			return (this.totalFilas * this.totalCellsDataProviders);
+		} else {
+			return this.totalFilas;
+		}
+	};
+
+	this.getGrid = function () {
+		return $("#" + this.config.id);
+	};
+	
+	this.resetSelection = function(){
+		var tableId = this.config.id;
+		$('#'+tableId+' tr.selected').removeClass("selected");
+		this.getGrid().resetSelection();
+	};
+	
+	/**
+	 *  Obtiene las filas seleccionadas en el caso de que sea una grilla con multiple seleccion
+	 */
+	this.selectedRows = function () {
+		var data = new Array();
+		var rows = this.getGrid().getGridParam("selarrrow");
+		for (var i = 0; i < rows.length; i++) {
+			data.push(this.getGrid().getRowData(rows[i]));
+		}
+		return data;
+	};
+
+	/**
+	 *  Obtiene la fila seleccionada en el caso de que sea una grilla con simple seleccion
+	 */
+	this.selectedRow = function() {
+		var rowId = this.getGrid().getGridParam("selrow");
+    	var row = this.getGrid().getRowData(rowId);
+    	return row;
+	};
+	
+	this.setCurrentPage = function(currentPage) {
+		this.currentPage = currentPage;
+		$(this.config.pagerId + " input.selbox").attr('value', currentPage);
+	};
+	
+	this.setPaginaAnterior = function(numero) {
+		if ((numero == null) || (numero == 0) || (numero === false)) {
+			$(this.config.pagerId + " #prev").hide();
+		} else {
+			$(this.config.pagerId + " #prev").show();
+		}
+	};
+	
+	this.setPaginaSiguiente = function(numero) {
+		if ((numero == null) || (numero === false)) {
+			$(this.config.pagerId + " #next").hide();
+		} else {
+			$(this.config.pagerId + " #next").show();
+		}
+	};
+	
+	this.setTotalPages = function(totalPages) {
+		this.totalPages = totalPages;
+		$(this.config.pagerId + " #sp_1").html('/' + totalPages);
+	};
+	
+	this.subGridRowExpandedFunction = function(subGridId, rowId) {
+		var subGridTableId = subGridId + "_table";
+	    $("#" + subGridId).html("<table id='" + subGridTableId + "' class='scroll'></table>");
+	    $("#" + subGridTableId).jqGrid({
+	       	colNames: this.getSubGridColumnNames(), 
+	       	colModel: this.getSubGridColumns(),
+	       	height: "auto",
+	       	imgpath: imagePath + "/grilla",
+	       	viewrecords: true,
+	       	sortorder: "desc",
+	       	loadonce: false,
+	       	datatype: "local"
+	    });
+	    this.completarSubGrid(subGridTableId, rowId);
+	};
+	
+	this.refreshSubGrid = function(rowId)  {
+		var subGridId = this.config.id + '_' + rowId;
+		this.subGridRowExpandedFunction(subGridId, rowId);
+	};
+	
+	this.completarSubGrid = function(subGridTableId, rowId) {
+		var grid = this.getGrid();
+		var subGrid = $('#' + subGridTableId);
+    	var row = grid.getRowData(rowId);
+    	subGrid.addRowData(1, row);
+	};
+}
+
+function GridDataSourceError(grilla) {
+    var grilla = grilla;
+    
+    this.execute = function(json) {
+    	grilla.desactivarLoader();
+    	if(grilla.gridDataSourceErrorFunction != null) {
+    		grilla.gridDataSourceErrorFunction(json);
+    	}
+    }
+}
+
+function GridDataSource(grilla) {
+    var grilla = grilla;
+    
+    this.execute = function(json) {
+    	this.completarGrilla(json);
+    }
+    
+	this.completarGrilla = function(json) {
+		grilla.data = json;
+		if (grilla.config.completarGrillaFunction != null) {
+			grilla.config.completarGrillaFunction(grilla, json);
+		} else {
+			grilla.completar(json.response.data);
+			grilla.actualizarPaginado(json.response);
+		}
+	};
+	this.loadFirstPage = function() {
+		grilla.loadFirstPage();
+	};
+	this.loadPreviousPage = function() {
+		grilla.loadPreviousPage();
+	};
+	this.loadPage = function(e) {
+	   if(e.keyCode == 13){
+		   var pageNumber = $(grilla.config.pagerId + " input.selbox").val();
+		   grilla.loadPage(pageNumber);
+	   }
+	};
+	this.loadNextPage = function() {
+		grilla.loadNextPage();
+	};
+	this.loadLastPage = function() {
+		grilla.loadLastPage();
+	};
+	this.reloadData = function() {
+		grilla.reloadData();
+	};
+	this.ordenar = function(colName, sortOrder) {
+		grilla.ordenar(colName, sortOrder);
+	};
+};
+
+function CellsDataProvider(url,pollUrl,modifiedColNames,colNamesToSend,callbackError) {
+    
+    this.url = url;
+    this.modifiedColNames = modifiedColNames;
+    this.colNamesToSend = colNamesToSend;
+    this.grilla;
+    // El correlationId se setea en la funcion pollFor
+    this.pollUrl = pollUrl;
+    this.transactionId = transactionController.currentTransactionId;
+    
+    this.execute = function(row, rowNum, grilla, grid) {
+        this.cargarLoaders(rowNum, grid);
+        var callback = new CallBack(grilla, this.modifiedColNames, rowNum, grid);
+		var inputDTO = this.obtenerInputDTO(row);
+		var inputPollDTO = new Object();
+		inputPollDTO['correlationId'] = "";
+	    linkController.asyncCall(this.url, this.pollUrl, callback, inputDTO, inputPollDTO, callbackError, this.transactionId);		
+        
+    };
+    this.obtenerInputDTO = function(row) {
+    	var inputDTO = new Object();
+    	for(var i=0;i<=this.colNamesToSend.length-1;i++) {
+    		var colName = this.colNamesToSend[i];
+    		inputDTO[colName] = row[colName];    		
+    	}
+    	return inputDTO;
+    };    
+    this.cargarLoaders = function(rowNum, grid) {
+    	var obj = new Object();
+        for(var i = 0; i <= this.modifiedColNames.length - 1; i++) {
+            obj[this.modifiedColNames[i]] = "<img src='images/loader.gif'>";         
+        }
+        grid.setRowData(rowNum,obj);
+    };
+};
+
+function CallBack(grilla, modifiedColNames, rowNum, grid) {
+    this.grilla = grilla;
+    this.grid = grid;
+    this.modifiedColNames = modifiedColNames;
+    this.rowNum = rowNum;
+    
+    this.execute = function(json, result) {
+        var resultData = json.response.data[0];
+        var o = new Object();
+        // se setean uno a uno para evitar modificar otras columnas que vengan en la respuesta
+        for (var i = 0; i < this.modifiedColNames.length; i++) {
+        	o[this.modifiedColNames[i]] = resultData[this.modifiedColNames[i]];
+        }
+        this.grid.setRowData(this.rowNum, o);
+        this.grilla.completeLoadedRow();
+    };
+};
+
+var onSelectRowFunction = {
+    execute: function(rowId,posx,posy) {
+    	var grid = linkGridController.getGrid(this.id);
+    	grid.executeOnSelectRowFunction(rowId,posx,posy);
+    }
+}
+
+function OnSortColumn(grid, contextualId) {
+	var grid = grid;
+	var contextualId = contextualId;
+	this.execute = function(index, colindex, sortorder) {
+		contextual.remove("#" + contextualId);
+		grid.invokeOnSortColumnFunctions();
+	};
+}
+
+var subGridRowExpandedFunction = {
+	execute: function(subGridId, rowId) {
+		var grid = linkGridController.getGrid(this.id);
+		grid.subGridRowExpandedFunction(subGridId, rowId);
+	}
+}
+
+var linkGridController = {
+	linkGrids: new Object(),
+	addLinkGrid: function(gridId, grid) {
+		linkGridController.linkGrids[gridId] = grid;
+	},
+	getGrid: function(gridId) {
+		return linkGridController.linkGrids[gridId];
+	}
+}
+
+function NumberFormatter(regex) {
+	this.regex = regex;
+	this.format = function(element, value) {
+		$(element).html(value);
+		if ((value != null) && (value != '')) {
+			if (value.toString().match(new RegExp(this.regex))) {
+				$(element).addClass('numeroNegativo');
+			}
+		}
+	};
+}

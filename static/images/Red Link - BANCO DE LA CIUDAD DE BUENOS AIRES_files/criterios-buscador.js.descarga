@@ -1,0 +1,10 @@
+var mapaBuscador = null;
+var criteriosBuscador = {
+	agregarOpcion: function(label,trx) {
+		if(mapaBuscador == null) {
+			mapaBuscador = new Object();
+		}
+		mapaBuscador[label.toLowerCase()] = new Array(trx,label);
+		//alert(mapaBuscador[label]); 
+	}
+}

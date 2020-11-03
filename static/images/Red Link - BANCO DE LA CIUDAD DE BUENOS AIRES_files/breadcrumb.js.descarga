@@ -1,0 +1,56 @@
+var breadcrumbController = {
+	breadcrumbs: new Object(),
+	guardarTransaccion: function(transactionCode, breadcrumbArray) {
+		breadcrumbController.breadcrumbs[transactionCode] = breadcrumbArray;
+	},
+	actualizarBreadCrumb: function(transactionCode) {
+		writeMigas(breadcrumbController.breadcrumbs[transactionCode]);
+	},
+	volverPosicionConsolidada: function() {
+		transactionController.cargarTransaccion(urlPC);
+	}
+};
+
+var enlaces = [];
+
+/*function setMigas(migas){
+	
+	enlaces = [];
+	
+	if($('.menu').hasClass('hBlock')){
+		$('.menu.hBlock ul.n2 li a').bind('click',function(){ $('.menu.hBlock > ul:first li').find('ul:first').removeClass('activo');});
+	}
+	
+	if(migas[0][0]=="nivel1"){
+		enlaces.push(migas[0][1]);
+		enlaces.push(migas[1][1]);
+		writeMigas();
+	}else if(migas[0][0]=="nivel2"){
+		enlaces.push(migas[0][1]);
+		enlaces.push(migas[1][1]);
+		enlaces.push(migas[2][1]);
+		writeMigas();
+	}else{
+		limpiarMenu($('.menu ul.n1 li a:contains('+migas[1]+')').parent('li'));
+		enlaces.push(migas[1]);
+		writeMigas();
+	}
+}*/
+
+function writeMigas(enlaces){
+	$('.breadcrumb ul').html('<li class="primero"><a onclick="javascript:breadcrumbController.volverPosicionConsolidada()"><span>Inicio</span></a></li>');
+	if (enlaces != null) {
+		for(var i = 0;i<enlaces.length;i++){
+			$('.breadcrumb ul').append('<li>'+enlaces[i]+'</li>');
+		}
+	} else {
+		$('.breadcrumb ul').append('<li>Pagina Inicial</li>');
+	}
+	$('.breadcrumb ul li:last').addClass('ultimo');
+}
+
+function limpiarMenu(boton){
+	$('.menu.tabs ul.n1>li').removeClass('selecN1');
+	$('.menu.tabs ul.n2,.menu.tabs ul.n3').removeClass('activo');
+	boton.addClass('selecN1');
+}

@@ -1,0 +1,41 @@
+/**
+ * Estilos para el componente de Informacion Personal
+ */
+
+div#cabeza div.contInfoPersonal{
+	float:right;
+	margin:7px 7px 7px 0;
+}
+
+div#cabeza div.infoPersonal{
+	padding:5px;
+	width:300px;
+	padding-bottom:3px;
+	min-height:80px;
+	height:auto!important;
+	height:80px;
+}
+
+div#izquierdo div.infoPersonal{
+	margin-top:10px;}
+
+div#cabeza div.infoPersonal div.datos{
+	float:left;
+	width:230px;
+}
+
+div#cabeza div.infoPersonal div.datos *{
+}
+
+div#cabeza div.infoPersonal div.foto{
+	float:right;
+}
+
+div#cabeza div.infoPersonal div.datos h6{
+}
+
+div#cabeza div.infoPersonal div.datos span{
+}
+
+div#cabeza div.infoPersonal div.datos h6 span#nomyapIP{
+}

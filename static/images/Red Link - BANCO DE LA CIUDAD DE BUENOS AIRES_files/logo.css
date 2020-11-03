@@ -1,0 +1,12 @@
+/**
+ * Estilos para el componente del Logo
+ */
+
+div#cabeza div.contLogo{
+	float:left;
+}
+
+div#cabeza div.logo{
+	/*width:271px;
+	height:44px;*/
+}

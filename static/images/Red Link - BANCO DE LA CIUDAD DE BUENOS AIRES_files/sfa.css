@@ -1,0 +1,89 @@
+
+div.sfa div.arriba {
+	height:15px;
+}
+
+div.sfa div.abajo{
+	height:25px;
+	height:25px;
+	margin-top:10px;
+}
+
+div.sfa span {
+	text-align: center;
+	font-weight:bold;
+	font-size:.8em;
+	height: 20px;
+	padding: 5px 0 0 0;
+}
+
+div.sfa div.claveSFA{
+	height:30px;
+	text-align:center;
+	padding: 5px 0 0 0;
+}
+
+div.sfa div.claveSFA a.boton,
+body #claveSFA a.boton,
+#cuerpo #transaccion #claveSFA a.boton{
+	float: none;
+	display: inline;
+	margin: 3px;
+}
+
+div.sfa div.abajo a.boton,
+#abajoSFA a.boton,
+body #abajoSFA a.boton,
+#cuerpo #transaccion #abajoSFA a.boton{
+	margin: 3px;
+	float: none;
+	display: inline;
+}
+
+div.sfa {
+	text-align:center;
+}
+
+div.sfa p{
+	text-align:center;
+	font-weight:bold;
+	font-size:.9em;
+	padding: 5px 0 0 0;
+	height: 25px;
+}
+
+div.sfa span {
+	text-align: center;
+	font-weight:bold;
+	font-size:.8em;
+	height: 25px;
+}
+
+div.sfa div.claveSFA input {
+/* 	margin-right: 15px; */
+	width: 120px;
+	height: 20px;
+	border: 1px solid #006633;
+	padding-left: 3px;
+}
+
+div.sfa  div.coordenadas input{
+	width: 25px;
+	border: 1px solid #006633;
+	margin-top: 5px;
+	margin-right: 3px;
+	padding-left: 3px;
+}
+
+div.sfa span.desa{
+	text-align:center;
+	font-weight:bold;
+}
+
+#claveSFA #eyePass{
+	vertical-align: middle !important; 
+	margin-right:20px !important;
+	width:19px !important;
+	height:12px !important;
+	cursor:pointer;
+}

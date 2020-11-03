@@ -1,0 +1,26 @@
+function ContenidoLoader(nombre, tagId) {
+    this.nombre = nombre;
+    this.tagId = tagId;
+
+    function LoadCompleteContent(tagId) {
+        this.execute = function(resultData) {
+           var urlContenido = resultData;
+           if (urlContenido != "") {
+               $.get(urlContenido, function(html) {$("#" + tagId).html(html);},"html");
+           } else {
+               // Si no hay url, no hay contenido
+               $("#" + tagId).html("");
+           }
+        }
+    }
+
+    this.cargarContenido = function () {
+        var inputDTO = new Object();
+        inputDTO['nombre'] = this.nombre;
+    
+        var linkLoader = new LinkLoader("contenidos.htm", '', [this.tagId], inputDTO,"");
+        linkLoader.addLoadCompleteFunction(new LoadCompleteContent(tagId));
+        linkLoader.init();
+        linkLoader.loadData();
+    }
+}

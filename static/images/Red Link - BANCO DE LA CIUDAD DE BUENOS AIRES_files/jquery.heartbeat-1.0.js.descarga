@@ -1,0 +1,58 @@
+/**
+ * jquery.heartbeat - Envía mensajes periódicos al servidor ante determinados eventos.
+ *
+ * @author jtula
+ * @version 1.0
+ *
+ * Este plugin agrega la función heatBeat() a JQuery, para ser invocado sobre una selección.
+ * La función recibe como parámetro un objeto con los siguientes atributos:
+ * 
+ * - url : La URL hacia donde se enviará el latido, por defecto 'heartBeat.htm'
+ * - event : El nombre del evento al que se bindea el latido, por defecto 'change'.
+ * - pulse : El tiempo mínimo en segundos entre dos latidos, 20 por defecto.
+ * 
+ * El parámetro URL normalmente debe suministrarse, para que HDIV no rebote el pedido.
+ * A la URL se accede mediante un request GET por AJAX, y la respuesta se ignora totalmente. 
+ */
+( function($) {
+
+	$.fn.heartBeat = function(settings) {
+		// Valores predeterminados de configuración
+		var config = {
+			url : 'heartBeat.htm',	// URL a la que se envía el latido
+			event : 'change',		// Evento al que se bindea la cosa
+			pulse : 20				// Intervalo mínimo en segundos entre latidos
+		};
+		
+		// Merge con los valores de configuracion suministrados
+		if (settings) {
+			$.extend(config, settings);
+		}
+		
+		// Corazón, el mismo para todos los objetos afectados
+		var heart = {
+			lastHeartBeat : new Date().getTime(),
+			url : config.url,
+			pulse : config.pulse,
+			beat : function() {
+				var timestamp = new Date().getTime();
+				if(((timestamp - this.lastHeartBeat) / 1000) > this.pulse) {
+					this.lastHeartBeat = timestamp;
+					$.get(this.url);
+				}					
+			} 
+		};
+		
+		// A cada elemento afectado le bindeo la funcion latido
+		this.each(
+				function() {
+					$(this).bind(config.event, function() { heart.beat(); });
+				}
+		);
+
+		// Permito encadenamiento de llamadas
+		return this;
+
+	};
+
+})(jQuery);

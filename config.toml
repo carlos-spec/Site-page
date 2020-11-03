@@ -1,0 +1,187 @@
+######################## default configuration ####################
+baseURL = "https://smok.media/"
+title = "Smok Media"
+theme = "site"
+themesDir = "../.."
+# disable language
+disableLanguages = [] # desable language from here
+defaultContentLanguage = "es"
+
+############################# Plugins ##############################
+
+# CSS Plugins
+[[params.plugins.css]]
+link = "plugins/bootstrap/bootstrap.min.css"
+[[params.plugins.css]]
+link = "plugins/fontawesome/font-awesome.min.css"
+[[params.plugins.css]]
+link = "plugins/hover/hover.css"
+[[params.plugins.css]]
+link = "plugins/magnific-popup/magnific-popup.css"
+[[params.plugins.css]]
+link = "plugins/owl-carousel/owl.carousel.min.css"
+[[params.plugins.css]]
+link = "plugins/owl-carousel/owl.theme.default.min.css"
+[[params.plugins.css]]
+link = "plugins/text-animation/text-animation.css"
+[[params.plugins.css]]
+link = "https://fonts.googleapis.com/css?family=Rubik:300,400,500,700,900&display=swap"
+
+# JS Plugins
+[[params.plugins.js]]
+link = "plugins/jQuery/jquery.min.js"
+[[params.plugins.js]]
+link = "plugins/bootstrap/bootstrap.min.js"
+[[params.plugins.js]]
+link = "plugins/wow.min.js"
+[[params.plugins.js]]
+link = "plugins/text-animation/text-animation.js"
+[[params.plugins.js]]
+link = "plugins/jquery.waypoints.min.js"
+[[params.plugins.js]]
+link = "plugins/filterizr/jquery.filterizr.min.js"
+[[params.plugins.js]]
+link = "plugins/magnific-popup/jquery.magnific-popup.min.js"
+[[params.plugins.js]]
+link = "plugins/owl-carousel/owl.carousel.min.js"
+
+
+############################## navigation ###############################
+
+[[menu.main]]
+name = "Home"
+URL = "#home"
+weight = 1
+
+[[menu.main]]
+name = "Nosotros"
+URL = "#about"
+weight = 2
+
+[[menu.main]]
+name = "Servicios"
+URL = "#service"
+weight = 3
+
+[[menu.main]]
+name = "Portfolio"
+URL = "#portfolio"
+weight = 4
+
+[[menu.main]]
+name = "Blog"
+URL = "/blog"
+weight = 5 
+
+[[menu.main]]
+name = "Testimonios"
+URL = "#testimonial"
+weight = 6
+
+[[menu.main]]
+name = "Contacto"
+URL = "#contact"
+weight = 7
+
+
+[permalinks]
+	post = "/blog/:year/:month/:day/:title/"
+	top = "/:filename/"
+
+#################### default parameters ################################
+[params]
+logo_light = "images/logo.png"
+logo_dark = "images/logo-dark.png"
+# Meta data
+description = "Smok Media"
+author = "Smok Media"
+# contact form action
+contact_form_action = "" # contact form works with https://formspree.io
+# Google Analitycs
+google_analitycs_id = "UA-153876953-1" # your id
+
+# Preloader
+[params.preloader]
+enable = true
+preloader = "images/preloader.gif" # use jpg, png, svg or gif format.
+  
+############################# social site ########################
+[[params.social]]
+icon = "fa-facebook-f" # fontawesome icon 4.7.0 : https://fontawesome.com/v4.7.0/icons/
+link = "https://www.facebook.com/smokmedia.ar/"
+
+[[params.social]]
+icon = "fa-twitter" # fontawesome icon 4.7.0 : https://fontawesome.com/v4.7.0/icons/
+link = "https://twitter.com/Smok_Media"
+
+[[params.social]]
+icon = "fa-instagram" # fontawesome icon 4.7.0 : https://fontawesome.com/v4.7.0/icons/
+link = "https://www.instagram.com/smok.media/"
+
+[[params.social]]
+icon = "fa-twitch" # fontawesome icon 4.7.0 : https://fontawesome.com/v4.7.0/icons/
+link = "https://twitch.tv/smokmedia"
+
+[[params.social]]
+icon = "fa-linkedin" # fontawesome icon 4.7.0 : https://fontawesome.com/v4.7.0/icons/
+link = "https://www.linkedin.com/company/smok-media/"
+
+############################# team site ########################
+[[params.team]]
+name = "Mariano Randazzo"
+title = "RRPP"
+image1 = "images/logo.png"
+foto= "images/mana.png"
+
+[[params.team]]
+name = "Alejandro Toscano"
+title = "RRPP"
+image = "images/ale.png"
+
+[[params.team]]
+name = "Guido Mignaco"
+title = "Publicista"
+image = "images/guido.png"
+
+[[params.team]]
+name = "Emanuel Calvo"
+title = "Head of Dev"
+image = "images/emanuel.png"
+
+[[params.team]]
+name = "Francisco Restivo"
+title = "Diseñador"
+image = "images/fran.png"
+
+[[params.team]]
+name = "Rocío Anunziato"
+title = "Contenidos y Comunicación"
+image = "images/ro.png"
+
+[[params.team]]
+name = "Amin Fariña"
+title = "Dev"
+image = "images/amin.png"
+
+################################### Spanish language #####################################
+[Languages.es]
+languageName = "Es"
+languageCode = "es-ar"
+contentDir = "content/spanish"
+weight = 2
+home = "Inicio"
+# copyright
+copyright = ""
+
+
+################################### English language #####################################
+[Languages.en]
+languageName = "En"
+languageCode = "en-us"
+contentDir = "content/english"
+weight = 1
+home = "Home"
+# copyright
+copyright = ""
+
+

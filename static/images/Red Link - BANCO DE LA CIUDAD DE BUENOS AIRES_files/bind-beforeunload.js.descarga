@@ -1,0 +1,17 @@
+if($.browser.mozilla) {
+	$(window).unbind('beforeunload').bind('beforeunload', function () {
+		if (ejecutarLogout) {
+			linkController.postJSON(urlLogout, null);
+		}
+		ejecutarLogout = true;
+	} );
+} else {
+	$(window).unload( function () {
+		if (ejecutarLogout) {
+			linkController.postJSON(urlLogout, null);
+		}
+		ejecutarLogout = true;
+	} );
+}
+
+var ejecutarLogout = true;

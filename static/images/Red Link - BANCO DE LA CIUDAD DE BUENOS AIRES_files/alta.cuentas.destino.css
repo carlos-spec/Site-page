@@ -1,0 +1,255 @@
+div#transaccion a.adherirCuenta{
+    float:right;
+    display:inline;
+    margin-top:15px;
+    padding-left:20px;
+    margin-bottom:10px;
+    margin-right:10px;
+   }
+
+.contCuentasNoAdheridas{
+    position:absolute;
+    z-index:100;
+    top:60px;
+    right:10px;
+    max-width:450px;    
+}
+
+*:first-child+html .contCuentasNoAdheridas{
+	top:263px;
+	right:190px;
+}
+
+* html .contCuentasNoAdheridas{
+	top:263px;
+	right:190px;
+}
+
+.contCuentasNoAdheridas a{
+    width:67px;
+    height:21px;
+    margin:5px;
+    float:right;
+    display:inline;
+    padding:2px 0 0 0;
+}
+
+#cuerpo #transaccion .contCuentasNoAdheridas div.areasAdhesion,
+#cuerpo #transaccion .contCuentasNoAdheridas div.areasAdhesion.comoAdherir,
+#cuerpo #transaccion .contCuentasNoAdheridas div.datosCuenta.habilitado{
+	display:block;
+	height:auto;
+	position:relative;
+	margin:0px;
+	padding:15px;
+	border-bottom:1px solid #ccc;
+}
+#cuerpo #transaccion .contCuentasNoAdheridas div.areasAdhesion label{
+	display:block;
+	margin-bottom:10px;
+}
+
+#cuerpo #transaccion .contCuentasNoAdheridas div.areasAdhesion select{
+	display:block;
+	padding:5px 7px;
+	margin-bottom:10px;
+	min-width:200px;
+}
+#cuerpo div#transaccion .contCuentasNoAdheridas div.areasAdhesion div#datosCBU > label{
+	display:block;
+}
+
+#cuerpo div#transaccion.contCuentasNoAdheridas div.areasAdhesion div#datosCBU > input,
+.administrarCuentasTransferencia div#cuerpo div#transaccion.columna div#transaccionAdministrarDestinoTransferencias form#agregarCuentasDestinoForm div.contCuentasNoAdheridas div.areasAdhesion.comoAdherir div#datosCBU.oculto input#cbu.required.cbu{
+	margin-bottom:10px!important;
+	min-width:200px;
+	padding:5px 7px;
+}
+
+div.oculto{float:none; margin:0px;}
+
+.administrarCuentasTransferencia div#cuerpo div#transaccion.columna div#transaccionAdministrarDestinoTransferencias form#agregarCuentasDestinoForm div.contCuentasNoAdheridas div.areasAdhesion.comoAdherir div#datosCBU{
+	margin-bottom:10px;
+}
+
+div#cuerpo div#transaccion .contCuentasNoAdheridas div.areasAdhesion.comoAdherir div#datosCBU.oculto div.adhesionDatosCBU label,
+div#cuerpo div#transaccion .contCuentasNoAdheridas div.areasAdhesion.comoAdherir div#datosCBU.oculto div.adhesionDatosCBU input{
+	display:inline-block;
+}
+
+.bancoDatosCbu{
+	margin-top:10px;
+}
+.clavesCuentasDestino{
+	display:block;
+}
+.clavesCuentasDestino .tipoClave, .clavesCuentasDestino .numeroClave{
+	display:inline-block;
+	width:auto;
+	vertical-align:top;
+	margin-right:20px;
+	min-width:100px;
+}
+
+.clavesCuentasDestino .tipoClave select,  
+.clavesCuentasDestino {
+	display:block;
+	width:100%;
+	margin:10px 0px;
+	padding:5px 7px;
+}
+
+.numeroClave input{   
+	margin:10px 0px;
+	display:block;
+	padding:5px 7px;
+}
+
+div#cuerpo div#transaccion div.contCuentasNoAdheridas div.datosCuenta > label,.clavesCuentasDestino .tipoClave label, .clavesCuentasDestino .numeroClave label{
+	display:block;
+	margin-top:10px;
+/* 	margin-bottom:5px; */
+} 
+div#cuerpo div#transaccion div.contCuentasNoAdheridas div.datosCuenta > input{
+	display:block;
+	padding: 5px 7px;
+}
+
+.contCuentasNoAdheridas .areasAdhesion.comoAdherir #datosCBU div label, .contCuentasNoAdheridas .areasAdhesion.comoAdherir #datosCBU div p {
+	font-size:12px;
+}
+
+.contCuentasNoAdheridas .areasAdhesion.comoAdherir #datosCBU div p{
+	margin-bottom:12px;
+	
+}
+
+div#cuerpo div#transaccion .contCuentasNoAdheridas div.datosCuenta.habilitado h6{
+	margin-bottom:12px;
+}
+.contCuentasNoAdheridas .areasAdhesion.comoAdherir #datosCBU div{
+	margin-bottom:12px;
+	
+}
+
+div#cuerpo div#transaccion.columna div#transaccionAdministrarDestinoTransferencias div.contCuentasNoAdheridas div.areasAdhesion div#datosCBU label.error,
+div#cuerpo div#transaccion.columna div#transaccionAdministrarDestinoTransferencias form#agregarCuentasDestinoForm div.contCuentasNoAdheridas div.datosCuenta.habilitado div.clavesCuentasDestino div.numeroClave label.error,
+div#cuerpo div#transaccion.columna div#transaccionAdministrarDestinoTransferencias form#agregarCuentasDestinoForm div.contCuentasNoAdheridas div.datosCuenta.habilitado label.error{
+	margin-top:10px;
+	width:auto;
+	border:0px;
+}
+
+div.oculto{display:none;}
+
+.btalias{
+	width:auto;
+}
+
+.cuit{
+/* 	color: red; */
+	display:none;
+}
+
+/******Modal Ayuda Alias*******/
+#ayudaCBUAlias{
+	float: right;
+	background: none !important;
+	width: 15px !important;
+}
+
+#ayudaAlias{
+	position: absolute !important; 
+	background-color: #f1f2f4; 
+	color: #3f3f3f; 
+	font-family: Arial; 
+	width: 600px; 
+	padding: 30px; 
+	border:1px solid #ccc; 
+	overflow: auto;
+	max-height: 600px; 
+	margin:auto;
+	display:none;
+	z-index: 1502;
+}
+
+#ayudaAlias h3{ 
+	font-size: 18px; 
+	font-weight: 600;
+}
+
+#ayudaAlias h2{ 
+	font-size: 14px; 
+	font-weight: 600;
+}
+
+#ayudaAlias p{ 
+	font-size: 12px; 
+	text-align: justify;
+}
+
+#ayudaAlias a.xCerrar{ 
+	position: absolute; 
+	right: 10px; 
+	top:10px; 
+	background-color: #ccc; 
+	color: #fff; 
+	padding: 5px 7px; 
+	font-size: 10px; 
+	text-decoration: none;
+}
+
+#ayudaAlias a.volver{ 
+	margin:20px auto 0px; 
+	font-weight: normal; 
+	padding: 5px 14px; 
+	background-color: #ccc; 
+	color: #3f3f3f; 
+	text-decoration: none; 
+	display: block; 
+	width: 100px; 
+	text-align: center; 
+	font-size: 14px;
+}
+
+#ayudaAlias ol{
+	font-size: 12px;
+	margin-left: 40px;
+	list-style: number;
+}
+
+#ayudaAlias img{
+	margin: 0px auto 20px; 
+	display: block; 
+	max-width: 350px;
+}
+
+#ayudaAlias i{ 
+	font-size: .8em;
+}
+
+#ayudaAlias .botonModificarAlias{
+	padding: 10px 20px;
+	background-color: #333; 
+	color: #fff;
+	display: block;
+	margin: 10px auto;
+	width: 100px;
+	font-size: .9em; 
+	text-align: center;
+}
+/******Modal Ayuda Alias*******/
+
+#pieControlesOTPAlta #botonesOTP {
+	margin-left: 30%;
+	line-height: normal;
+}
+#pieControlesOTPAlta {
+	color: #333;
+	line-height: normal;
+}
+
+#validarOTPTransaccionModalAlta {
+	line-height: normal;
+	text-align: left;
+}

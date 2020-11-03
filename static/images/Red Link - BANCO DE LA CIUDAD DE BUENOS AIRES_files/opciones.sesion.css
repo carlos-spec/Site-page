@@ -1,0 +1,31 @@
+/**
+ * Estilos para el componente Opciones Sesion
+ */
+div#cabeza div.contOpcionesSesion{
+	height:25px;
+	float:left;
+}
+
+* html div#cabeza div.contOpcionesSesion{display:inline;}
+
+div#cabeza div.opcionesSesion ul {
+	list-style:none;
+}
+
+div#cabeza div.opcionesSesion ul li {
+	padding:2px 5px;
+	display:inline;
+}
+
+body #saludo.linkModal div.middle{
+	height:60px!important;
+}
+
+body #saludo.linkModal div.middle p{
+	margin-top:20px;
+	margin-left:125px;
+}
+
+body #saludo.linkModal div.bottom{
+	margin-left:35%;
+}

@@ -1,0 +1,74 @@
+// urlFaqs, urlOperaciones, urlSeguridad, urlSiteMap, urlAyuda definidas en home.jsp
+var enlacesController = {
+		
+	init: function(){
+		
+		enlacesController.bindCerrarModal();
+		
+		$('.faqsHome').click(function(){
+			enlacesController.mostrarFaqs();
+		});
+	
+		$('.operacionesHome').click(function(){
+			enlacesController.mostrarOperaciones();
+		});	
+	
+		$('.seguridadHome').click(function(){
+			enlacesController.mostrarSeguridadSistema();
+		});
+		
+		$('.sitemapHome').click(function(){
+			enlacesController.mostrarSiteMap();
+		});
+		
+//		$('.ayudaHome').click(function(){
+//			enlacesController.mostrarAyuda();
+//		});
+	
+	},
+	bindCerrarModal: function() {
+		$('div#enlacesModal #cerrarEnlacesModal').unbind("click").click(function(){
+			enlacesController.ocultarOpcionSeleccionada();
+		});		
+	},
+	ocultarOpcionSeleccionada: function() {
+		modalController.hideModal("#enlacesModal");
+	},
+	mostrarFaqs: function() {
+		$("#enlacesModal div.top h4").html("Preguntas Frecuentes");
+		linkController.postHTML(urlFaqs,null,enlacesController.showModalEnlaces);
+		enlacesController.bindCerrarModal();
+	},	
+	mostrarOperaciones: function() {
+		$("#enlacesModal div.top h4").html("Operaciones Disponibles");
+		linkController.postHTML(urlOperaciones,null,enlacesController.showModalEnlaces);
+		enlacesController.bindCerrarModal();
+	},	
+	mostrarSeguridadSistema: function() {
+		$("#enlacesModal div.top h4").html("Seguridad del Sistema");
+		linkController.postHTML(urlSeguridad,null,enlacesController.showModalEnlaces);
+		enlacesController.bindCerrarModal();
+	},	
+	mostrarSiteMap: function() {
+		$("#enlacesModal div.top h4").html("Mapa del Sitio");
+		linkController.postHTML(urlSiteMap,null,enlacesController.showModalEnlaces);
+		enlacesController.bindCerrarModal();
+	},
+	mostrarAyuda: function() {
+		$("#enlacesModal div.top h4").html("Ayuda");
+		linkController.postHTML(urlAyuda,null,enlacesController.showModalEnlaces);
+		enlacesController.bindCerrarModal();
+	},
+	showModalEnlaces: function(htmlStr) {
+		if (htmlStr.match("sessionExpired")) {
+    		linkController.handleSessionExpired();
+    	} else {
+    		$("#textoContenidoEnlace").empty().html(htmlStr);
+    		modalController.showModal("#enlacesModal");
+    	}
+	}		
+}
+
+$(function(){
+	enlacesController.init();
+})

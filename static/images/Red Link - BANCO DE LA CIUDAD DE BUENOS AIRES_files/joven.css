@@ -1,0 +1,219 @@
+@import "../reset.css";
+@import "../modal.css";
+
+/**
+ * Estructura base de Home Banking
+ * Template Joven
+ *
+ * - espacios entre elementos: 5px
+ */
+body{behavior:url("../../../bibliotecas/hb/csshover.htc");}
+
+#contenedorPpal{
+	width: 960px;		/* 2x (ancho total de columna izquierda +
+                            padding transaccion) + ancho total columna derecha */
+	margin:0 auto;
+	/*position:relative;*/
+}
+
+#cabeza{
+	width: 100%;
+	position: relative;
+    min-height:140px;
+	/* atributos para que funcione el min-height
+	 * en todos los navegadores*/
+    height:auto !important; 
+    height:140px;
+    z-index:1000;
+}
+
+#cuerpo{
+	padding-left: 190px;   /* ancho total de columna izquierda */
+	padding-right: 210px;  /* ancho total de columna derecha + padding transaccion */
+    min-height:300px;
+	/* atributos para que funcione el min-height
+	 * en todos los navegadores*/
+    height:auto !important; 
+    height:300px;
+}
+
+#cuerpo .columna{
+	/*position: relative;*/
+	float: left;
+	display:inline;
+}
+
+/**
+* Estilos comunes
+*/
+
+#cuerpo #transaccion table.scroll tbody tr.subgrillaEspecial{cursor:default;}
+#cuerpo #transaccion div.scroll img{cursor:pointer;cursor:hand;}
+ body .linkModal div#detalleMsj label{
+ 	margin-top:10px;
+ }
+ 
+body #avisoModal.linkModal div#detalleMsj input{
+  	margin-top:10px;
+}
+
+/*:first-child+html #cuerpo .columna{
+	position: static;}
+
+* html #cuerpo .columna{
+	position: static;}*/
+
+#cuerpo #transaccion{
+	width: 560px;	/* ancho de la columna */
+	margin: 5px 0px;
+}
+
+#cuerpo #izquierdo{
+	width: 190px;	/* ancho de la columna */
+	padding: 5px 0px;
+	margin-left: -134%;
+	right: 190px;	/* ancho total de la columna + padding transaccion) */
+}
+
+/*hack para ie7*/
+*:first-child+html #cuerpo #izquierdo{
+	left:210px;
+}
+/*** IE Fix ***/
+* html #cuerpo #izquierdo {
+  left: 210px;           /* RC fullwidth */
+  position:static;
+  margin-left: -750px;
+}
+
+#cuerpo #derecho{
+	width: 210px;  /* ancho de la columna */
+	padding: 5px 0px;
+	margin-right: -210px;	/* ancho total de la columna + padding transaccion */
+}
+
+#pie{
+	clear: both;	
+	width: 960px;
+	position: relative;
+	min-height:105px;
+	/* atributos para que funcione el min-height
+	 * en todos los navegadores*/
+    height:auto !important; 
+    height:105px;
+    text-align:center;
+}
+
+
+/**
+* Estilos comunes
+*/
+
+#cuerpo #transaccion table.scroll tbody tr.subgrillaEspecial{cursor:default;}
+#cuerpo #transaccion div.scroll img{cursor:pointer;cursor:hand;}
+ body .linkModal div#detalleMsj label{
+	margin-top:10px;
+ }
+ 
+body #avisoModal.linkModal div#detalleMsj input{margin-top:10px;}
+
+#cuerpo #transaccion .subgrid {width:100%;}
+
+#cuerpo #transaccion table.scroll .tablediv {overflow:auto;width:100%!important;}
+/*#cuerpo #transaccion table.scroll .tablediv {overflow:hidden;width:100%!important;}*/
+*:first-child+html #cuerpo #transaccion table.scroll .tablediv {overflow:hidden;overflow-x:auto;width:100%!important;min-height:70px;}
+* html #cuerpo #transaccion table.scroll .tablediv {overflow:hidden;overflow-x:auto;width:100%!important;height:auto!important;height:70px;}
+
+body div.estado {z-index: 1100;}
+
+div#enlacesModal div.middle ul.n2 li{margin-left:30px;}
+
+body div.scroll span {
+	display: none;
+	vertical-align: top;
+}
+
+body div.scroll #sp_1 {
+	display: inline;
+}
+
+#cuerpo #transaccion .contextual.simple.detalleVep{
+	/*left:1100px!important;*/
+	margin-left:0px;/*LINKI-4669*/
+}
+
+* html #cuerpo #transaccion .contextual.simple.detalleVep{
+	/*left:1100px!important;*/
+	margin-left:0px;/*LINKI-4669*/
+}
+
+body .linkModal div#cuentasContextual.contextual.simple a{
+	margin-top:-40px!important;
+	margin-left:-500px!important;
+}
+
+* html body .linkModal div#cuentasContextual.contextual.simple a{
+	margin-top:10px!important;
+	margin-left:0px!important;
+}
+
+* html body .linkModal div#cuentasContextual.contextual.simple{
+	margin-left:-550px;
+	margin-top:-100px;
+}
+
+body .linkModal table.scroll tbody tr{
+	*position:static;}
+
+* html body div.estado {position: absolute;top: 50px;left: 50%;}
+
+body #modalConfiguracionPersonal #configuracionMensajesAlertas .configTransaccion #cuentasSeleccion table.scroll tbody tr{
+	*position:static;}
+	
+div#cargando {
+	width: 60px !important;
+	height: 60px !important;
+	margin-left: -100px !important;
+}
+
+div#cargando.extractos {
+	width: 200px !important;
+	height: 100px !important;
+	margin-left: -100px !important;
+}
+
+#contextual.contextual.multiple.doble{
+	margin-top:-45px;
+}
+
+.contenidoDeLaEntidad object, .contenidoDeLaEntidad embed{
+	z-index:-2;
+}
+
+* html body .contextual.multiple.buzonCont {
+	margin-top:60px!important;
+}
+/*fix para el doble scroll*/
+body table.scroll tbody tr.subgrid td{	padding:0;}
+body table.scroll tbody tr.subgrid td table.scroll tbody td{	padding:0 5px;}
+
+/*subgrilla de la agenda de pagos*/
+#cuerpo div#transaccion table.scroll tbody tr.subgrillaEspecial td{	height:auto;}
+.divLikeTable div {width:100%!important;}
+.divLikeTable div, .divLikeTable ul {display:table!important;}
+
+ /*fix grilla consulta veps usuario*/
+body div#cuerpo div#transaccion div#resultadoVeps{
+	/*correccion issue LINKI-4413*/
+	*height:auto!important;
+	*overflow-y:hidden;
+	*padding-bottom:20px;
+}
+
+div#respuesta h2{width:90%;}
+
+body div#transaccion table.scroll tr#_empty{*display:none!important;}/*LINKI-5290*/
+
+/*LINKI-6554*/
+fieldset.datosDestinatario label#labelTipoCuenta{
+	float:none;display:block;width:150px;}

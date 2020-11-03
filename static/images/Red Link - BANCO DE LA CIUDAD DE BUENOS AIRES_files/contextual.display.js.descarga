@@ -1,0 +1,35 @@
+/**
+ * @author npinto
+ */
+ 	
+/**
+ * {object} contextual
+ *  
+ * 'add': 	evento que te muestra y añade a la ultima columna de la fila actual
+ * @param 'idFila': es el primer parametro pasado en el evento onCellSelect
+ * @param 'margen' [DEPRECATED]: se usaba para setear un tipo que cambiaba el margen-top
+ * 
+ */
+		
+var contextual = 
+{
+	celdas:[],
+	remove: function(contextual) {
+		if (!contextual) contextual = '#contextual';
+		$(contextual).hide();
+	},
+	add:function(idFila,margen,idTabla,contextual,arrayDatos){
+		if (!contextual) contextual = '#contextual';				
+		var selector = (idTabla) ? '#'+idTabla : 'table.scroll';
+
+		$('.contextual').hide();
+		$(contextual).hide();
+				
+		$(contextual).fadeIn('slow',function(){ });				
+	},
+	datos:function(){
+		return this.celdas;
+	}
+}
+
+$(function(){$('.contextual').hide();})

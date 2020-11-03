@@ -1,0 +1,106 @@
+/**
+ * @author natan
+ *
+ *	autocomplete
+ *	plugin para la busqueda de acciones
+ *
+ */
+
+ var autocomplete = {
+ 	ver: '0.3',
+ 	arrayCriterios: null,
+ 	criterios: function() {
+	    if(autocomplete.arrayCriterios == null) {
+	    	autocomplete.arrayCriterios = new Array();
+	    	this.agregarEnlacesEstaticos();
+		    for(x in mapaBuscador) {
+//		    	autocomplete.arrayCriterios.push(x[1]);
+		    	autocomplete.arrayCriterios.push(mapaBuscador[x][1]);
+		 	}
+	    }
+	    autocomplete.arrayCriterios.sort(); //LINKI-7991 - Se ordena alfabeticamente
+	    return autocomplete.arrayCriterios;
+ 	},
+ 	agregarEnlacesEstaticos: function() {
+ 		autocomplete.arrayCriterios.push('Preguntas Frecuentes');
+ 		autocomplete.arrayCriterios.push('Operaciones Disponibles');
+ 		autocomplete.arrayCriterios.push('Seguridad del Sistema');
+ 		autocomplete.arrayCriterios.push('Mapa del Sitio');
+ 	},
+ 	init: function(){
+		/*
+ 	 		Autocomplete para el buscador
+ 	 		
+ 	 		se agregan en este array todas los conceptos posibles de busqueda
+ 	 	*/
+	
+ 		$(".buscador input[type=text]").autocomplete(autocomplete.criterios(),
+ 		{
+			width: 180,
+			max: 10,
+			scroll: true,
+			minChars: 0,
+			autoFill: false, //LINKI-7991 - Se deactiva el AutoFill porque es inconpatible con el matchCOntains
+			mustMatch: false,
+			matchContains: true,//LINKI-7991 - Se activa busqueda dentro de las palabras
+			highlight: function(match, keywords) { //LINKI-7991 - Se marcan las coincidencias
+		        return match.replace(new RegExp("("+keywords+")", "gi"),'<span class="highlight">$1</span>');
+		    }
+		}).val('Saldos').one('click',function(){
+			$(this).select();
+		}).keydown(function(e) {/*FIX ENTER PARA EL BUSCADOR .. LINKI-4746*/
+			if(e.which==13)autocomplete.loveFunction();
+		});
+
+		$(".buscador a").bind('click',autocomplete.loveFunction);
+		
+  	},
+  	loveFunction:function()	{
+		var url = '';
+		var valorOriginal = $('.buscador input').val().toString();
+		var valor = valorOriginal.toLowerCase();
+//		alert(valorOriginal + '  '+valor);
+		switch(valor){
+			case 'preguntas frecuentes': enlacesController.mostrarFaqs();
+				break;
+			case 'operaciones disponibles': enlacesController.mostrarOperaciones();
+				break;				
+			case 'seguridad del sistema': enlacesController.mostrarSeguridadSistema();
+				break;
+			case 'mapa del sitio': enlacesController.mostrarSiteMap();
+				break;
+			case 'buzon': url='buzon';
+				break;	
+//			default: url = autocomplete.handleValorIngresado(valorOriginal);
+			default: url = autocomplete.handleValorIngresado(valor);
+				break;
+		}
+		if ( url ==  'noExiste' ) {
+			estado.show("El valor ingresado no es correcto o la secci&oacute;n solicitada no est&aacute; disponible.", estado.tipo.ERROR);
+		} else {
+			if (url&&valor){ 
+				sePuedeCargar = true;
+				$.historyLoad(url);
+			}	
+		}		
+		
+		return false;
+	},
+	handleValorIngresado:function(key) {
+	    if(mapaBuscador[key] != null && mapaBuscador[key] != undefined) {
+    		return mapaBuscador[key][0];
+	 	}
+		return 'noExiste';
+		
+	}
+ };
+ 
+ /*
+	En cuanto termina de cargar el DOM ejecutamos el iniciador del autocomplete
+*/
+
+ $(function(){
+ 
+ 	autocomplete.init();
+		
+ });

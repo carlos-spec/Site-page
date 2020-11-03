@@ -1,0 +1,69 @@
+#actualizacionDPModal, #exitoActualizacionDPModal{
+	margin-left: -300px;
+}
+
+.inputActualizacionDP.error{
+	border-color: red;
+}
+
+div#actualizacionDPModal.jqmWindow.linkModal.jqmID5 div.middle{
+	max-height: inherit !important;
+}
+
+.bottom .clave a{
+	text-transform: none;
+}
+
+#actualizacionDPModal .middle {
+	max-height: 310px !important
+}
+
+div#confirmarCvv2Modal.jqmWindow.linkModal.jqmID7{
+	width: 450px !important;
+	margin-left: -243px;
+}
+
+div#confirmarCvv2Modal div.middle div#detalleMsj {
+	text-align: center;
+}
+
+div#confirmarCvv2Modal div.middle div#detalleMsj div#leyendaIngresarClave{
+	margin-bottom: 10px;
+}
+
+#confirmarCvv2Modal #detalleMsj .divDatos .inputDato{
+	margin-bottom: 15px;
+	margin-left: 10px;
+}
+
+#confirmarCvv2Modal #detalleMsj .divDatos .errorInput{
+	color: red;
+	border: 2px solid red
+}
+
+
+div#confirmarCvv2ModalMenu.jqmWindow.linkModal.jqmID7{
+	width: 450px !important;
+}
+
+div#confirmarCvv2ModalMenu div.middle div#detalleMsj {
+	text-align: center;
+}
+
+div#confirmarCvv2ModalMenu div.middle div#detalleMsj div#leyendaIngresarClave{
+	margin-bottom: 10px;
+}
+
+#confirmarCvv2ModalMenu #detalleMsj .divDatos .inputDato{
+	margin-bottom: 15px;
+	margin-left: 10px;
+}
+
+#confirmarCvv2ModalMenu #detalleMsj .divDatos .errorInput{
+	color: red;
+	border: 2px solid red
+}
+
+#activarOTPModal .middle{
+	max-height: none !important;
+}

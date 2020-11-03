@@ -1,0 +1,235 @@
+div#derecho div.accesosFrecuentes{
+	margin:0 5px 0 0;
+	float: right;
+	display:inline;
+	/*position:relative;*/
+	border-color:red;
+}
+
+div#derecho div.accesosFrecuentes div.titulo{
+	padding: 0 5% 0 5%;
+	margin-top: 10px;
+	float:left;
+	display:inline;
+	width: 88%;
+	
+	background:#B3B3B3;
+	border-top: 1px solid #666;
+	border-right: 1px solid #666;
+	border-bottom: 0 solid #666;
+	border-left: 1px solid #666;
+}
+
+* html div#derecho div.accesosFrecuentes div.titulo{
+	padding: 0 2% 0 2%;}
+
+div#derecho div.accesosFrecuentes div.titulo span{
+	text-align: center;
+	width: 100%;
+
+	text-align: left;
+	color:#FFFFFF;
+	font-size:0.8em;
+}
+
+div#derecho div.accesosFrecuentes div.contenido{
+	width:98%;
+	min-height:100px;
+	margin:0;
+	float:left;
+	display:inline;
+	/*position:relative;*/
+	
+	border:1px solid #666;
+	font-size:0.8em;
+	background-color:#FFFFFF;
+}
+
+*:first-child+html div#derecho div.accesosFrecuentes div.contenido{
+	width:158px;}
+
+* html div#derecho div.accesosFrecuentes div.contenido{
+	width:81%;}
+
+div#derecho div.accesosFrecuentes div.contenido a{
+	float:right;
+	display:inline;
+	margin-top:10px;
+	padding:5px 11px 5px 27px;
+	
+	font-family:Verdana,sans-serif;
+	color:#666666;
+	text-decoration:none;
+}
+
+*:first-child+html div#derecho div.accesosFrecuentes div.contenido a{
+	padding:5px 0px 5px 27px;}
+
+* html div#derecho div.accesosFrecuentes div.contenido a{
+	padding:5px 0px 5px 27px;}
+
+div#derecho div.accesosFrecuentes a.btnAgregar{
+	float:right;
+	display:inline;
+	margin-top:5px;
+	padding: 0 5px 0 20px;
+	
+	color:#333333;
+	background:url(imagenes/compartido/bt.agregar.gif) no-repeat center left;
+}
+
+div#derecho div.accesosFrecuentes a.btnAgregar.activo{
+	background-color:#666666;
+	color:#FFFFFF;
+}
+
+div#derecho div.accesosFrecuentes div.contenido a:hover{
+	color:#000000;
+}
+
+div#izquierdo div.accesosFrecuentes div.contenido ul li{
+	width:100%;
+}
+
+div#derecho div.accesosFrecuentes div.contenido ul.n1 li{
+	margin: 0 10px;
+	padding: 2px;
+	font-size: 12px;
+	font-weight: bold;
+	clear:left;
+	width:90%;
+}
+
+div#derecho div.accesosFrecuentes div.contenido ul.n1 li p{
+	float:left;
+	display:inline;
+	margin-left:5px;
+	color:#777777;
+}
+div#derecho div.accesosFrecuentes div.contenido ul li a{
+	width:80%;
+}
+div#derecho div.accesosFrecuentes div.contenido ul.n1 li a, div#derecho div.accesosFrecuentes div.contenido ul.n1 li span{
+	float:left;
+	display:inline;
+	margin:0;
+	padding:0;
+	background:none;
+	outline:none;
+	color:#FF6600;
+	font-weight:bold;
+	cursor:default;
+}
+
+div#izquierdo div.accesosFrecuentes div.contenido ul.n1 li a, div#izquierdo div.accesosFrecuentes div.contenido ul.n1 li span{cursor:default;outline:none;}
+
+div#izquierdo div.accesosFrecuentes div.contenido ul.n1 li a:hover{text-decoration:none;}
+
+div#derecho div.accesosFrecuentes div.contenido ul li.ar{
+	padding:5px;
+}
+
+div#derecho div.accesosFrecuentes div.contenido ul.n1 li ul.n2 li{
+	margin:0 0 0 10px;	
+	float:left;
+	display:inline;
+	width:100%;
+}
+
+div#derecho div.accesosFrecuentes div.contenido ul li p{
+	background:url(imagenes/accesos.rapidos/bt.quitar.gif) no-repeat;
+	width:15px;
+	height:15px;
+	float:left;
+	display:inline;
+	cursor:pointer;
+	display:none;
+	margin: 0 0 0 10px;
+}
+
+div#derecho div.accesosFrecuentes div.contenido ul li p span{
+	visibility:hidden;
+}
+
+div#izquierdo div.accesosFrecuentes div.contenido ul.n1 li ul.n2 li a{
+	cursor:pointer;
+	cursor:hand;
+}
+
+div#derecho div.accesosFrecuentes div.contenido ul.n1 li ul.n2 li a{
+	margin-top:2px;
+	color:#333333;
+	font-weight:normal;
+	width:80%;
+	cursor:pointer;
+	cursor:hand;
+}
+
+div#derecho div.accesosFrecuentes div.contenido ul.n1 li ul.n2 li a:hover{
+	text-decoration:underline;
+}
+
+/**
+ * Area Pie -> Accesos Rapidos
+ */
+div#pie div.accesosFrecuentes{	
+	z-index:500;
+	bottom:0px;
+	position:fixed!important;
+	/*width:960px;*/ /**Comentar este ancho soluciona el issue HB-1549**/
+	/*float:left;*/
+	margin:0px!important;
+}
+
+* html div#pie div.accesosFrecuentes{
+	position:absolute;}
+
+div#pie div.accesosFrecuentes div.titulo span{
+	padding: 5px 25px 5px 5px;
+	cursor:pointer;
+	_cursor:hand;	
+}
+
+div#pie div.accesosFrecuentes div.titulo{width:190px;}
+
+div#pie div.accesosFrecuentes div.titulo h4 span{
+	width:16px;
+	height:16px;
+}
+
+div#pie div.accesosFrecuentes div.contenido{	
+	min-height: 50px;
+	padding:5px;
+	*height:auto;
+	*height:50px;
+}
+
+div#pie div.accesosFrecuentes div.contenido ul.n1:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility:hidden;
+}
+
+div#pie div.accesosFrecuentes div.contenido ul.n1 li{
+	width:120px;
+	float:left;
+}
+
+div#pie div.accesosFrecuentes div.contenido ul.n1 li a {
+	float:left;
+	display:block;
+	cursor:default;
+	outline:none;
+}
+
+div#pie div.accesosFrecuentes div.contenido ul.n1 li ul.n2 {float:left;}
+
+div#pie div.accesosFrecuentes div.contenido ul.n1 li ul.n2 li a{
+	float:left;
+	clear:both!important;
+	display:block!important;
+	cursor:pointer;
+	cursor:hand;
+}

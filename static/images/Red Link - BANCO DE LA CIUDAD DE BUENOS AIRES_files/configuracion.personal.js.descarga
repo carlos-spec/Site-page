@@ -1,0 +1,110 @@
+//controlador configuracion personal
+var configPersonalController = {
+        transacciones: {    modificarDatosPersonales:  { url: urlModificarDatosPersonales,  cargada:false,    data: null}, 
+                            mensajesAlertas:           { url: urlMensajesAlertas,           cargada:false,    data: null},
+                            avisoViajeExterior:        { url: urlAvisoViajeExterior,        cargada:false,    data: null},                  
+                            aplicativoLinkCelular:     { url: urlAplicativoLinkCelular,     cargada:false,    data: {showTitle:false}},
+                            cambiarClave:              { url: urlCambiarClave,              cargada:false,    data: null},
+                            bajaSegundoFactor:         { url: urlBajaSegundoFactor,         cargada:false,    data: null},
+                            consultaRecibosSueldo:     { url: urlConsultaRecibosSueldo,     cargada:false,    data: null},
+                            blanqueoClavePIL:          { url: urlBlanqueoClavePIL,          cargada:false,    data: null},
+                            blanqueoClavePIN:          { url: urlBlanqueoClavePIN,          cargada:false,    data: null},
+                            bloquearTarjetaDebito:     { url: urlBloquearTarjetaDebito,     cargada:false,    data: null},
+                            autogestionCanalesHb:      { url: urlAutogestionCanalesHb,      cargada:false,    data: null},
+                            activarOTPMenu:     	   { url: urlActivarOTPMenu,      		cargada:false,    data: null},
+                            desbloquearOTP:     	   { url: urlDesbloquearOTP,      		cargada:false,    data: null},
+                            modificarMedioEnvio:  	   { url: urlModifMedioEnvio,      		cargada:false,    data: null},
+                            desactivarOTP:  	       { url: urlDesactivarOTP,      		cargada:false,    data: null}
+    },
+	transaccionCargando: "",
+	
+	init:function(){
+		//configuracion inicial
+		$('#configuracionPersonalBt').unbind('click').click(function(){	configPersonalController.mostrar();	});
+		$('#modalConfiguracionPersonalClose').unbind('click').click(function(){	configPersonalController.ocultar();	});
+		configPersonalController.ocultarDetalleInit();
+	},
+	
+	mostrar:function(){
+		$('#modalConfiguracionPersonal').appendTo('body');
+		modalController.showModal("#modalConfiguracionPersonal");
+		$('.middle').show();
+		$('.jqmOverlay').unbind('click');
+	},
+	
+	ocultar:function() {
+		modalController.hideModal("#modalConfiguracionPersonal");
+		$('#modalConfiguracionPersonal .middle .extracto').removeClass('abierto');
+	},
+	
+	ocultarDetalleInit:function() {
+		$('#modalConfiguracionPersonal .middle .extracto h5').click( function() {
+			$('#modalConfiguracionPersonal .middle .extracto h5').unbind('click');
+			if ($(this).parent('div').hasClass('abierto')) {
+				$(this).parent('div').removeClass('abierto');
+				configPersonalController.ocultarDetalleInit();
+			} else {
+				configPersonalController.transaccionCargando = $(this).parent('div').attr('id');
+				var transaccion = configPersonalController.transacciones[configPersonalController.transaccionCargando];
+				$('#modalConfiguracionPersonal .middle .extracto .detalle .contenido').html('');
+				$(this).parent('div').find('div.detalle div.contenido').html("<img src='" + imagePath + "/compartido/cargando.gif' alt='cargando..' class='cargando' />");
+				transactionController.cargarTransaccion(transaccion.url, configPersonalController.cargarTransaccion, false,transaccion.data);
+				
+				$('#modalConfiguracionPersonal .middle .extracto').removeClass('abierto');
+				if ($(this).attr('id') == "contAvisoViaje") {
+					$('#bottomAviso').show();
+					$('#ingreso').show();
+					$('#respuesta').hide();
+				}
+				$(this).parent('div').addClass('abierto');
+			}
+		});
+	},
+	refrescarTransaccion:function(transactionID){
+		configPersonalController.transaccionCargando = transactionID;
+		var transaccion = configPersonalController.transacciones[configPersonalController.transaccionCargando];
+		$(this).parent('div').find('div.detalle div.contenido').html("<img src='" + imagePath + "/compartido/cargando.gif' alt='cargando..' class='cargando' />");
+		transactionController.cargarTransaccion(transaccion.url, configPersonalController.cargarTransaccionRecarga, false,transaccion.data);
+		if ($(this).attr('id') == "contAvisoViaje") {
+			$('#bottomAviso').show();
+			$('#ingreso').show();
+			$('#respuesta').hide();
+		}
+	},
+	cargarTransaccionRecarga: function(html) {
+		if (html.match("sessionExpired")) {
+    		linkController.handleSessionExpired();
+    	} else {
+    		if (html.match("SFAErrorPage")){
+    			$("#" + configPersonalController.transaccionCargando +" div.detalle div.sfaError").html(html);
+    		}
+    		else{
+	    		$("#" + configPersonalController.transaccionCargando + " div.detalle div.contenido").html(html);
+	    		var transaccion = configPersonalController.transacciones[configPersonalController.transaccionCargando];
+	    		transaccion.cargada = true;
+	    		fixAllSelects("#" + configPersonalController.transaccionCargando + " div.detalle div.contenido");
+	    		
+	    		configPersonalController.transaccionCargando = "";
+	    		configPersonalController.ocultarDetalleInit();
+    		}
+    	}
+    },
+    cargarTransaccion: function(html) {
+		if (html.match("sessionExpired")) {
+    		linkController.handleSessionExpired();
+    	} else {
+    		$("#" + configPersonalController.transaccionCargando + " div.detalle div.contenido").html(html);
+    		var transaccion = configPersonalController.transacciones[configPersonalController.transaccionCargando];
+    		transaccion.cargada = true;
+    		fixAllSelects("#" + configPersonalController.transaccionCargando + " div.detalle div.contenido");
+    		
+    		configPersonalController.transaccionCargando = "";
+    		configPersonalController.ocultarDetalleInit();
+    	}
+    }
+};
+
+//window onload
+$(function() {
+	configPersonalController.init();
+});

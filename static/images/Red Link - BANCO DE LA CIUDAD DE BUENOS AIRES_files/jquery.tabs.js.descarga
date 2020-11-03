@@ -1,0 +1,68 @@
+/**
+ * jquery.tabs.js - Genera tabs a partir de estructura HTML
+ *
+ * @author mmendez
+ * @version 1.0
+ *
+ * Este plugin agrega la funcionabilidad de tabs basica a una serie de divs
+ * La función recibe como parámetro un objeto con los siguientes atributos:
+ * 
+ * - leyendaId : La leyenda que se cambiará cuando se seleccione una solapa
+ * 
+ */
+(function($){
+	$.fn.generarTabs = function(option){
+		// Param plugin
+		var param = jQuery.extend({
+			leyendaId:".leyenda",
+			prechange:null,
+			postchange:null
+		}, option);
+
+		$(this).each(function() {
+			var $this = this;
+			var $thisId = "#"+this.id;
+			var $thisTabPos = "#tab_"+this.id+"_pos";
+			var actualID = 0;
+
+			// Oculto todas las leyendas
+			$($thisId+" .solapa .subtitulo").hide();
+			
+			function ocultarTodas(indice){
+				if ( param.prechange ) 
+					if ( !param.prechange(actualID, indice) ){
+						return false;
+					}
+				
+				$($thisId+" .solapa").hide();
+				$($thisId+" .solapas li").removeClass('selected');
+				return true;
+			}
+			function mostrar(indice){
+				if ( !ocultarTodas(indice) ){
+					return false;
+				}
+				$($thisId+">.leyenda").html($($thisId+" .solapa:eq("+indice+") .subtitulo").html());
+				$($thisId+" .solapa:eq("+indice+")").show();
+				$($thisTabPos).attr('pos', indice);
+				if ( param.postchange ) 
+					param.postchange(indice);
+				
+				actualID = indice;
+				return true;
+			}
+
+			$($thisId+" .solapas li").click(function(){
+				var numContent = $(this).attr('indice') - 1;
+				if ( mostrar(numContent) )
+					$(this).addClass('selected');
+			});
+
+			$($thisId).append('<div style="display:none;" id="tab_'+this.id+'_pos" pos=0 />');
+			
+			$($thisId+" .solapas li:eq(0)").click();
+
+			$(this).show();
+		});
+	}
+})(jQuery);

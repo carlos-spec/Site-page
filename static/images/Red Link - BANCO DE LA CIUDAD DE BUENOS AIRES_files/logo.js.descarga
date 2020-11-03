@@ -1,0 +1,9 @@
+//$(function(){
+//	var banco = imagePath.split("entidades/")[1].split("/")[0].split('.').join(' ');
+//	$('.logo').html('<img src="'+imagePath+'/logo/logo.gif" alt="'+banco+'" />');
+	//Carga logo desde el CMS
+	//var contenidoLoader = new ContenidoLoader("logo", "idLogo");
+	//contenidoLoader.cargarContenido();	
+//});
+var banco = imagePath.split("entidades/")[1].split("/")[0].split('.').join(' ');
+$('.logo').html('<img src="'+imagePath+'/logo/logo.gif" alt="'+banco+'" />');

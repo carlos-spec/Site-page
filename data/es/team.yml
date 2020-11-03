@@ -1,0 +1,17 @@
+team:
+  title: "Smok.Team"
+  members:
+    - name: Mariano Randazzo
+      tile: "RRPP"
+    - name: Alejandro Toscano
+      tile: "RRPP"
+    - name: Guido Mignaco
+      title: "Publicista"
+    - name: Emanuel Calvo
+      title: "Head of Dev"
+    - name: Francisco Restivo
+      title: "Diseñador"
+    - name: Rocío Anunziato
+      title: "Contenidos y Comunicación"
+    - name: Amin Fariña
+      title: "Dev"

@@ -1,0 +1,410 @@
+div.guia ul li.cuentasDestino{width:160px;}
+div.guia ul li.monto{width:100px;}
+
+* html div.guia ul li{margin-right:5px;}
+
+div.guia ul li.ultimo{width:65px;}
+* html div.guia ul li.ultimo{width:55px;}
+
+
+div.guia ul li.cuentasDestino a{
+	width:150px;
+}
+
+div.guia ul li.monto a{
+	width:90px;
+}
+
+#tablas{
+	margin-top:-3px;
+	/*width:90%;*/
+	float:left;
+	display:inline;
+	padding:3px;
+}
+
+#tablas:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility:hidden;
+}
+
+#nav a, #nav a:active, #nav a:visited {
+	float:left;
+	display:inline;
+	padding:5px 8px;
+	margin-right:10px;
+	outline:none;
+}
+	
+#nav a.selected, #nav a.selected:active, #nav a.selected:visited {
+	outline:none;
+}
+
+.navbody{
+	padding:5px;
+}
+
+.pieTransaccion{
+}
+	
+/*.confirmarTransaccion{
+	margin-top:5px;
+	padding:7px 0 0 0;
+	width: 347px;
+	height: 32px;
+	float:left;
+	display:inline;
+}
+
+.agregarTransaccion{
+	float:left;
+	display:inline;
+	margin:13px 0 0 75px;
+	padding:0 0 0 16px;
+}*/
+
+/*-controles de descarga e impresion -*/
+#cuerpo div#transaccion div.controlesGrilla{
+	width:100%;
+	clear:both;
+	float:left;
+	display:inline;
+	margin-top:10px;
+}*/
+
+#cuerpo div#transaccion div.controlesGrilla a{
+	display:inline;
+	margin:10px 10px 0 0;
+	padding-left:25px;
+	height:22px;
+}
+
+/*body div.controlesGrilla a.print {
+	float: left;}
+
+body div.controlesGrilla a.download {
+	float: right;}*/
+
+#cuerpo div#transaccion .deshabilitado{
+	background: #D6D6D6;
+	color: #A3A3A3;}
+	
+#cuerpo div#transaccion .deshabilitadoTitulo{
+	color:#AFAFAF;
+	}
+
+/*#cuerpo #transaccion #tablas,*/
+#cuerpo #transaccion #tablas #monto{
+	width:100%!important;
+}
+
+#cuerpo #transaccion #tablas #monto #formConTerceros{display:none;}
+
+#cuerpo #transaccion .controles{
+	padding:5px;
+	width:99%;
+}
+
+#cuerpo div#transaccion .linkModal div.bottom#pieControles{
+	padding:10px 5px!important;
+}
+
+#cuerpo #transaccion .controles a{
+	text-decoration:none;
+	background-repeat:no-repeat;
+	background-position:center left;
+	padding:4px 0 2px 26px;
+	margin-left:18px;
+}
+
+#cuerpo #transaccion #tablas .formulario{
+	padding:5px;
+}
+
+/*nueva transferencia*/
+
+div.guia ul li {
+    padding:
+}
+#transaccion div#tablas{
+    margin-top:-3px;
+    padding:3px;
+}
+
+#cuerpo #transaccion #tablas .formulario table td{
+	padding:3px 0px 0px 0px;
+
+}
+
+
+#cuerpo #transaccion #tablas #formCuentaNoVinculada{
+	float:left;
+	display:inline;
+	background:#FFFFFF;
+	width:520px;
+}
+
+#cuerpo #transaccion #tablas #formCuentaVinculada{
+    float:left;
+    display:inline;
+    background:#FFFFFF;
+    width:520px;
+}
+
+
+#cuerpo #transaccion #tablas .formulario div.datosDestinatario, div.datosOriginante, div.datosTransferencia{
+    background-color:#EEEEEE;
+    border-right: 2px solid #666666;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 2px solid #666666;
+    border-left: 1px solid #CCCCCC;
+    padding: 10px;
+    margin-bottom:10px;
+    margin-top:15px;
+}
+#cuerpo #transaccion #tablas .formulario div.datosDestinatario div, div.datosOriginante div, div.datosTransferencia div{
+    background-color:#EEEEEE;
+    border-bottom: 1px solid #666666;
+    padding: 3px;
+    margin-top: 0px;
+    width: 99%;
+    font-size:14px;
+    color:#333333;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+
+
+#cnTipoTransferencia {
+    color:green;
+    border:0px solid #3D83CC;
+    background-color: #EEEEEE;
+    text-align:left;
+    font-weight:bold;
+    font-size:16px;
+}
+
+#cnMismoTitular {
+    width:100px;
+    height: 25px;
+}
+
+#cuerpo #transaccion #tablas .formulario div.datosDestinatario table td, div.datosOriginante table td, div.datosTransferencia table td{
+    font-size:12px;
+    color:#333333;
+    vertical-align:top;
+    width:120px;
+}
+#cuerpo #transaccion #tablas .formulario div.datosDestinatario table td input, div.datosOriginante table td input, div.datosTransferencia table td input,
+div.datosTransferencia table td select{
+    font-size:12px;
+    color:#333333;
+    margin-right:25px;
+}
+#cuerpo #transaccion #tablas #formCuentaNoVinculada.formulario table{
+	width:100%;
+}
+#cuerpo #transaccion #tablas #formCuentaNoVinculada.formulario div.datosDestinatario table td, div.datosOriginante table td{
+    width:50%;
+}
+#cuerpo #transaccion #tablas #formCuentaNoVinculada.formulario div.datosOriginante table td input, div.datosDestinatario table td input{
+    width:180px;
+}
+
+.datosDestinatario #cnEnviaMail{
+    width:auto;
+}
+
+#cuerpo #transaccion #tablas #formCuentaNoVinculada.formulario table td #cnEnviaMail{ 
+    width:15px;
+}
+
+#cuerpo #transaccion #tablas .formulario div.datosDestinatario table td input, div.datosOriginante table td input#cnEmailDestinatario{
+    color:#333333;
+}
+
+#cuerpo #transaccion #tablas .formulario table td select{
+    height:24px;
+    border:1px solid #CCCCCC;
+    color: #333333;
+}
+
+
+body .linkModal #montosTotales{
+	padding:10px!important;
+}
+
+body .linkModal #montosTotales p{
+	padding-top:10px;
+}
+
+body .linkModal #montosTotales div.totales{display:inline;}
+
+/*Estructura del ticket*/
+
+
+body .linkModal table.ticket tbody{
+	padding:10px;
+}
+
+body .linkModal table.ticket *{
+	padding:5px 0;
+}
+
+input.campoConErrorOperacionSegura{
+}
+
+label.campoConErrorOperacionSegura{
+	position:absolute;
+	z-index:111111;
+	padding:2px;
+	min-width:150px;
+	width:auto!important;
+	width:150px;
+	left:150px;
+	top:56px;
+}
+
+
+#transaccion #areaTransaccionalTransferencia #formCuentaVinculada #cvEnviaMail,
+#transaccion #areaTransaccionalTransferencia #formCuentaVinculada label{float:left!important;}
+
+/*Campo Error*/
+
+input.campoConError {
+    background-color: #FFBBBB;
+    border: 1px solid #FF3333;
+    float: left;
+    margin-top: 5px!important;
+    /*width: 120px;*/
+}
+
+label.campoConError {
+    /*background: #FF3333;*/
+    color: #FF3333;
+    display: block;
+}
+
+.comprobanteContenedor{
+    max-width:560px;
+}
+#transaccion label.campoConError {
+    padding: 5px 5px 0px 0px;
+    font-size: 10px;
+    margin: 3px 0 0 2px;
+    /*float: left;*/
+}
+
+label.campoConErrorAbajo {
+    float:left;
+    display:inline;
+    clear:both;
+    color: #CF0000!important;
+    font-size: 10px;
+}
+
+#cnEnviaMail{
+    margin: 0px!important;
+}
+
+
+.transfer1b, .transfer19{
+	display:none;
+}
+
+
+#cuerpo #transaccion #tablas #formCuentaNoVinculada.formulario div.datosOriginante table td input, div.datosDestinatario table td input#cnNumeroClave{
+    width:inherit;
+}
+
+
+table.transfer1b tr td{
+    width:85px !important;
+} 
+
+
+/******Modal Ayuda Alias*******/
+#ayudaCBUAlias{
+	float: right;
+	background: none !important;
+	width: 15px !important;
+}
+
+#ayudaAlias{
+	position: absolute !important; 
+	background-color: #f1f2f4; 
+	color: #3f3f3f; 
+	font-family: Arial; 
+	width: 600px; 
+	padding: 30px; 
+	border:1px solid #ccc; 
+	overflow: auto;
+	max-height: 600px; 
+	margin:auto;
+	display:none;
+	z-index: 990;
+}
+
+#ayudaAlias h3{ 
+	font-size: 18px; 
+	font-weight: 600;
+}
+
+#ayudaAlias p{ 
+	font-size: 12px;
+	text-align: justify;
+}
+
+#ayudaAlias a.xCerrar{ 
+	position: absolute; 
+	right: 10px; 
+	top:10px; 
+	background-color: #ccc; 
+	color: #fff; 
+	padding: 5px 7px; 
+	font-size: 10px; 
+	text-decoration: none;
+}
+
+#ayudaAlias a.volver{ 
+	margin:20px auto 0px; 
+	font-weight: normal; 
+	padding: 5px 14px; 
+	background-color: #ccc; 
+	color: #3f3f3f; 
+	text-decoration: none; 
+	display: block; 
+	width: 100px; 
+	text-align: center; 
+	font-size: 14px;
+}
+
+#ayudaAlias ol{
+	font-size: 12px;
+}
+
+#ayudaAlias img{
+	margin: 0px auto 20px; 
+	display: block; 
+	max-width: 350px;
+}
+
+#ayudaAlias i{ 
+	font-size: .8em;
+}
+
+#ayudaAlias .botonModificarAlias{ 
+	padding: 10px 20px; 
+	background-color: #333; 
+	color: #fff; 
+	display: block; 
+	margin: 10px auto; 
+	width: 100px;  
+	font-size: .9em; 
+	text-align: center;
+}
+/******Modal Ayuda Alias*******/

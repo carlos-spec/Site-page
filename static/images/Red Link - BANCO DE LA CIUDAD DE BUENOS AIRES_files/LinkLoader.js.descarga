@@ -1,0 +1,240 @@
+/**
+ * Clase para cargar los datos en los diferentes tags html.
+ * 
+ * @param url El RequestMapping desde el cual obtener los datos.
+ * @param pollUrl El RequestMapping para polling (Casos Tandem). Puede no estar definido.
+ * @param tagIds Ids de los elementos que se quieren completar con el 
+ * 				 resultado del llamado al Controller.
+ * @param inputDTO Objeto con los atributos necesarios para ejecutar el llamado al Controller. 
+ * @param inputPollDTO Objeto con los atributos necesarios para ejecutar 
+ * 					   el llamado al Controller de polling. Puede no estar definido.
+ * @param idEspera Id del elemento html que es posible incorporar a la pagina para mostrar 
+ * 					  una imagen de 'loading'.
+ * 
+ */
+function LinkLoader(url, pollUrl, tagIds, inputDTO, inputPollDTO, idEspera) {
+	this.url = url;
+	this.pollUrl = pollUrl;
+	this.tagIds = tagIds;
+	this.loadCompleteFunction = [];
+	this.loadArrayCompleteFunction = [];
+	this.totalLoadCompleteFunction = 0;
+	this.totalLoadArrayCompleteFunction = 0;
+	this.inputDTO = inputDTO;
+	this.inputPollDTO = inputPollDTO;
+	this.form = null;
+	this.idEspera = idEspera;
+	this.errorHandler = null;
+	this.callbackError = null;
+	this.transactionId = transactionController.currentTransactionId;
+	
+	/**
+	 * Carga las imagenes de loading.
+	 */
+	this.init = function() {
+		this.cargarLoader();
+	};
+	
+	/**
+	 * Agrega a cada elemento definido en 'tagIds' una imagen de loading individual
+	 * y en caso de especificar un 'idEspera' se setea una imagen de loading general.
+	 */
+	this.cargarLoader = function() {
+		for ( var i = 0; i < this.tagIds.length; i++) {
+			$('#' + this.tagIds[i]).html('<img src="images/loader.gif">');
+		}
+		if(this.idEspera!='' || this.idEspera!=null){
+			$('#' + this.idEspera).html('<img src="'+imagePath+'/compartido/cargando.gif">');
+		}
+	};
+	
+	/**
+	 * Realiza la llamada asincronica, utilizando las urls y dtos seteados previamente.
+	 * Si se seteo un formulario, agrega los datos que estan dentro del mismo al dto original.
+	 * Crea un callback con los 'tagIds' y 'loadCompleteFunction' que se llama
+	 * cuando regresa el llamado al Controller.
+	 */
+	this.loadData = function() {
+		var callback = new CallBackLabel(tagIds, this.loadCompleteFunction, this.loadArrayCompleteFunction);
+		if (this.form != null) {
+			var datosFormulario = $("#" + this.form).formToArray();
+			for (i in datosFormulario) {
+				this.inputDTO[datosFormulario[i].name] = datosFormulario[i].value;
+			}
+		}
+		
+		if(this.errorHandler != null)
+		    linkController.handleError = this.errorHandler;
+		
+		linkController.asyncCall(this.url, this.pollUrl, callback, this.inputDTO, this.inputPollDTO, this.callbackError, this.transactionId);
+	};
+	
+	/**
+	 * Redirige a loadData().
+	 */
+	this.execute = function() {
+		this.loadData();
+	};
+	
+	/**
+	 * Agrega una funcion a la lista de funciones que se ejecutan
+	 * cuando devuelve el llamado asincronico.
+	 */
+	this.addLoadCompleteFunction = function(f) {
+		this.loadCompleteFunction[this.totalLoadCompleteFunction] = f;
+		this.totalLoadCompleteFunction++;
+	};
+	
+	/**
+	 * Agrega una funcion para resultados multiples 
+	 * a la lista de funciones que se ejecutan
+	 * cuando devuelve el llamado asincronico.
+	 */
+	this.addLoadArrayCompleteFunction = function(f) {
+		this.loadArrayCompleteFunction[this.totalLoadArrayCompleteFunction] = f;
+		this.totalLoadArrayCompleteFunction++;
+	};
+	
+	/**
+	 * Setea un formulario al LinkLoader.
+	 */
+	this.addForm = function (formulario) {
+		this.form = formulario;
+	};
+	
+	this.setErrorHandler = function(f)
+	{
+	    this.errorHandler = f;
+	}
+}
+
+/**
+ * Callback que se llama cuando devuelve la invocacion al Controller.
+ * 
+ * @param tagIds Ids de los elementos que se quieren completar con el 
+ * 				 resultado del llamado al Controller.
+ * @param loadCompleteFunction Lista de funciones que se ejecutan 
+ * 							   cuando devuelve el llamado asincronico.
+ */
+function CallBackLabel(tagIds, loadCompleteFunction, loadArrayCompleteFunction) {
+	this.tagIds = tagIds;
+	this.loadCompleteFunction = loadCompleteFunction;
+	this.loadArrayCompleteFunction = loadArrayCompleteFunction ; 
+	
+	/**
+	 * Funcion que se ejecuta por defecto.
+	 * Recibe por parametro el json que es devuelto por el Controller.
+	 */
+	this.execute = function(json, result) {
+	    if (json.response.message == "sessionExpired") 
+	    { // session expirada
+            handleSessionExpired();
+        }
+	    else
+	    {
+    		var resultData = json.response.data[0];
+    		this.loadData(resultData);
+    		this.invokeLoadArrayCompleteFunctions(json.response.data);
+    		this.invokeLoadCompleteFunctions(resultData);
+	    }
+	};
+	
+	/**
+	 * Setea cada uno de los elementos definidos por sus ids (tagId)
+	 * con el valor devuelto en 'resultData'.
+	 */
+	this.loadData = function(resultData) {
+		for ( var i = 0; i < this.tagIds.length; i++) {
+			var tagId = this.tagIds[i];
+			$('#' + tagId).html(resultData[tagId]);
+		}
+	};
+	
+	/**
+	 * Llama cada una de las funciones seteadas como 'loadCompleteFunction'
+	 * pasando por parametro el json resultante.
+	 */
+	this.invokeLoadCompleteFunctions = function(resultData) {
+		for ( var i = 0; i <= this.loadCompleteFunction.length - 1; i++) {
+			this.loadCompleteFunction[i].execute(resultData);
+		}
+	};
+	
+	/**
+	 * Llama cada una de las funciones seteadas como 'loadArrayCompleteFunction'
+	 * pasando por parametro el json resultante.
+	 */
+	this.invokeLoadArrayCompleteFunctions = function(resultData) {
+		for ( var i = 0; i <= this.loadArrayCompleteFunction.length - 1; i++) {
+			this.loadArrayCompleteFunction[i].execute(resultData);
+		}
+	};	
+	
+	function handleSessionExpired() 
+	{
+		window.location = getLoginPageLL() + '?sessionExpired=true' + getParametrosAdicionalesLL(true);
+    };	
+}
+
+
+function addHDIVState(dto, hdivstate)
+{
+	dto._STATE_ = hdivstate;
+}
+
+//TODO REFACTORIZAR
+
+//Esto se repite en los archivos:
+//LinkTransactionController.js
+//LinkLoader.js
+//link-controller.js
+//modificando solo el nombre de la funcion y del array asociativo.
+
+//Se repite porque por el momento no puedo asumir el costo de buscar/generar un lugar comun
+//Se cambian los nombres porque no se como pueden responder los diferentes interpretes de js al encontrar dos
+//entidades con el mismo nombre (por mas que funcionalmente sean identicas) y dado que hay lugares donde se incluyen
+//mas de uno de estos archivos
+var productoToLoginPageLL = new Array(2);
+productoToLoginPageLL["hb"] = "login.htm";
+productoToLoginPageLL["gp"] = "loginGP.htm";
+
+function getLoginPageLL(){
+	var match = /https?:\/\/([^\.]*)/.exec(window.location);
+	if(match != null && match.length == 2){
+		if( productoToLoginPageLL[match[1]] != undefined && productoToLoginPageLL[match[1]] != null ){
+			return productoToLoginPageLL[match[1]];
+		}
+		else{
+			return "login.htm";
+		}
+	}
+	else{
+		return "login.htm";
+	}
+}
+
+function getParametrosAdicionalesLL(yaTieneParametro){
+	
+	var ret = "";
+	var match = /https?:\/\/([^\.]*)/.exec(window.location);
+	if(match != null && match.length == 2){
+		
+		if(match[1] == "gp"){
+			
+			if( typeof(idSolicitudPago) != "undefined" && idSolicitudPago != null && idSolicitudPago != ""){
+
+				if(yaTieneParametro){
+					ret += "&";
+				}
+				ret += "id=";
+				ret += idSolicitudPago;
+				
+				yaTieneParametro = true; //Por si se agregan otros abajo				
+				
+			}
+
+		}
+	}
+
+	return ret;
+}

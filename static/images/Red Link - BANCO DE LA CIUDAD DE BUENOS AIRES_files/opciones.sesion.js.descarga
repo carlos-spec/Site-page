@@ -1,0 +1,46 @@
+var opcionesMenuBuzonController = {
+	init: function() {
+		opcionesMenuBuzonController.actualizarTotal();
+	},
+	actualizarTotal: function() {
+		if( buzonHabilitado == 'true' ) {
+		
+			linkController.postJSON( urlTotalMensajesBuzon, null , function(json) {
+				var total = json.response.data[0]; 
+					if(total == '0') {
+						$("#totalMensajesBuzon").empty().html("Buz&oacute;n ("+total+")");	
+					} else {
+						$("#totalMensajesBuzon").empty().html("<b>Buz&oacute;n ("+total+")</b>");
+					}
+					
+			} );
+		
+		}
+	}
+}
+
+var opcionesSesionController = {
+		init: function() {
+			opcionesSesionController.actualizarMailToContacto();
+		},
+		actualizarMailToContacto: function() {
+     		// emailMensajeAlBanco,contactoUsaURL y urlContacto se obtienen de home.jsp
+			if(!contactoUsaURL){
+				$("#mailToContacto").attr("href","mailto:"+emailMensajeAlBanco);
+			} else {
+				$("#mailToContacto").attr("href",urlContacto);
+				$("#mailToContacto").attr("target","_blank");
+			}
+			
+			$("#mailToContacto").click(function() {
+				//Funcion que llama al servicio que factura la transaccion de pago de transacciones
+				linkController.postJSON(urlMarcarPagoTransaccionContacto, null, null);	
+			});
+		}
+}
+
+$(document).ready(	function() {
+		opcionesMenuBuzonController.init();
+		opcionesSesionController.init();
+	}
+)
